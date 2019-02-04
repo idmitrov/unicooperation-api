@@ -1,8 +1,14 @@
 import { dbSchema, dbModel } from '../db';
 
 const universitySchema = new dbSchema({
+    /**
+     * @name name
+     * @type String
+     */
     name: {
-        type: String
+        type: String,
+        required: true,
+        unique: true
     }
 });
 
