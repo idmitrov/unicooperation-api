@@ -56,12 +56,6 @@ const configureRoutes = (api) => {
     });
 }
 
-const configureApi = (api) => {
-    configureAuth();
-    configureMiddlewares(api);
-    configureRoutes(api);
-}
-
 export default {
     /**
      * Connect to Api
@@ -71,7 +65,9 @@ export default {
     start(host, port) {
         const api = express();
 
-        configureApi(api);
+        configureAuth();
+        configureMiddlewares(api);
+        configureRoutes(api);
 
         return http
             .createServer(api)
