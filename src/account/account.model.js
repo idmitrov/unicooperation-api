@@ -24,10 +24,10 @@ const accountSchema = new dbSchema({
 
 /**
  * Compare candidate password with user.password
- * @param {String} candidatePassword
+ * @param {String} possiblePassword
  */
-accountSchema.methods.comparePasswords = function(candidatePassword) {
-    return Utils.compareHashes(candidatePassword, this.password);
+accountSchema.methods.comparePasswords = function(possiblePassword) {
+    return Utils.compareHashes(possiblePassword, this.password);
 }
 
 accountSchema.pre('save', function(next) {
