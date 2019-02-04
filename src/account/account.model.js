@@ -1,4 +1,5 @@
 import { dbSchema, dbModel } from '../db';
+import Utils from '../utils';
 
 const accountSchema = new dbSchema({
     /**
@@ -19,6 +20,20 @@ const accountSchema = new dbSchema({
         required: true,
         minlength: 6
     }
+});
+
+accountSchema.pre('save', function(next) {
+    if (this.isModified('password')) {
+        return Utils.generateSalt()
+            .then((salt) => {
+                return Utils.generateHash(this.password, salt)
+            })
+            .then((hashedPassword) => {
+                this.password = hashedPassword;
+            });
+    }
+
+    return next();
 });
 
 export default new dbModel('Account', accountSchema);
