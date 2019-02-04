@@ -22,6 +22,14 @@ const accountSchema = new dbSchema({
     }
 });
 
+/**
+ * Compare candidate password with user.password
+ * @param {String} candidatePassword
+ */
+accountSchema.methods.comparePasswords = function(candidatePassword) {
+    return Utils.compareHashes(candidatePassword, this.password);
+}
+
 accountSchema.pre('save', function(next) {
     if (this.isModified('password')) {
         return Utils.generateSalt()
