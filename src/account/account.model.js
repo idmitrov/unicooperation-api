@@ -30,6 +30,8 @@ accountSchema.pre('save', function(next) {
             })
             .then((hashedPassword) => {
                 this.password = hashedPassword;
+                
+                return next();
             });
     }
 
