@@ -6,14 +6,14 @@ export default {
             .then((foundAcction) => {
                 if (!foundAcction) {
                     const admin = new Account({
-                        username,
+                        email,
                         password
                     });
 
                     return admin.save();
                 }
 
-                return Promise.resolve(admin);
+                return Promise.resolve(foundAcction);
             });
     }
 }
