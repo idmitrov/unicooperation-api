@@ -1,6 +1,11 @@
 import Account from './account.model';
 
 export default {
+    /**
+     * Seed Admin account
+     * @param {String} email 
+     * @param {String} password 
+     */
     seedAdmin(email, password) {
         return Account.findOne({ email })
             .then((foundAcction) => {
