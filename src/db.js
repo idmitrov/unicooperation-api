@@ -8,7 +8,7 @@ dbDriver.Promise = global.Promise;
 
 export default {
     /**
-     * Connect to server database 
+     * Connect to Api database 
      * @param {String} host 
      * @param {String} port 
      * @param {String} name 
