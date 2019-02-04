@@ -1,5 +1,14 @@
 import http from 'http';
 import express from 'express';
+import cors from 'cors';
+
+const configureApi = (api) => {
+    return new Promise((resolve, reject) => {
+        api.use(cors);
+
+        resolve(api);
+    })
+}
 
 export default {
     /**
@@ -8,8 +17,11 @@ export default {
      * @param {String} port 
      */
     start(host, port) {
-        http
-            .createServer(express)
-            .listen(port, host);
+        return configureApi(express())
+            .then(() => {
+                http
+                    .createServer(express)
+                    .listen(port, host);
+            });
     }
 };
