@@ -13,7 +13,8 @@ export default {
     },
     api: {
         host: cfg.API_HOST,
-        port: cfg.API_PORT
+        port: cfg.API_PORT,
+        secret: cfg.API_SECRET
     },
     admin: {
         email: cfg.ADMIN_EMAIL,

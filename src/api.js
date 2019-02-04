@@ -5,6 +5,9 @@ import { urlencoded, json } from 'body-parser';
 
 import Passport from 'passport';
 import { Strategy } from 'passport-local';
+import jwt from 'jsonwebtoken';
+
+import Config from './config'; 
 import Account from './account/account.model';
 
 const configureAuth = (options) => {
@@ -29,9 +32,8 @@ const configureAuth = (options) => {
                         }
 
                         const userData = {
-                            // todo: token
-                            username: user.username,
-                            email: user.email,
+                            token: jwt.sign({ sub: user._id, password: user.password }, Config.api.secret),
+                            email: foundUser.email
                         }
 
                         return done(null, userData);
