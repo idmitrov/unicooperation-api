@@ -7,9 +7,17 @@ export const dbSchema = Schema;
 dbDriver.Promise = global.Promise;
 
 export default {
-    connect(host, port, name) {
+    /**
+     * Connect to server database 
+     * @param {String} host 
+     * @param {String} port 
+     * @param {String} name 
+     * @param {Object} options 
+     */
+    connect(host, port, name, options = {}) {
         const connectionString = `mongodb://${host}:${port}/${name}`;
+        const dbDefaults = { useNewUrlParser: true, useCreateIndex: true };
 
-        return dbDriver.connect(connectionString, { useNewUrlParser: true, useCreateIndex: true });
+        return dbDriver.connect(connectionString, Object.assign({}, dbDefaults, options));
     }
 };
