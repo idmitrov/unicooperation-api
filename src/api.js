@@ -50,9 +50,16 @@ const configureMiddlewares = (api) => {
         .use(Passport.initialize());
 }
 
+const configureRoutes = (api) => {
+    api.use('*', (req, res) => {
+        res.json({ message: 'Unknown endpoint' });
+    });
+}
+
 const configureApi = (api) => {
     configureAuth();
     configureMiddlewares(api);
+    configureRoutes(api);
 }
 
 export default {
@@ -62,10 +69,12 @@ export default {
      * @param {String} port 
      */
     start(host, port) {
-        configureApi(express());
+        const api = express();
+
+        configureApi(api);
 
         return http
-            .createServer(express)
+            .createServer(api)
             .listen(port, host);
     }
 };
