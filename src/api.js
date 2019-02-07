@@ -1,5 +1,5 @@
 import http from 'http';
-import express from 'express';
+import express, { Router } from 'express';
 import cors from 'cors';
 import { urlencoded, json } from 'body-parser';
 
@@ -9,8 +9,9 @@ import jwt from 'jsonwebtoken';
 
 import Config from './config'; 
 import Account from './account/account.model';
+import accountRoutes from './account/account.routes';
 
-const configureAuth = (options) => {
+const configureAuth = (options = {}) => {
     const localOptions = {
         session: false,
         passReqToCallback: true,
@@ -18,8 +19,10 @@ const configureAuth = (options) => {
         passwordField: 'password',
     };
 
-    Passport.use('local', new Strategy(localOptions, (req, username, password, done) => {
-        Account.findOne({ email: username })
+    Passport.use('local', new Strategy(localOptions, (req, email, password, done) => {
+        console.log(email);
+        
+        Account.findOne({ email })
             .then((foundUser) => {
                 if (!foundUser) {
                     return done({ message: 'Unauthenticated' });
@@ -32,7 +35,7 @@ const configureAuth = (options) => {
                         }
 
                         const userData = {
-                            token: jwt.sign({ sub: user._id, password: user.password }, Config.api.secret),
+                            token: jwt.sign({ sub: foundUser._id, password: foundUser.password }, Config.api.secret),
                             email: foundUser.email
                         }
 
@@ -51,10 +54,14 @@ const configureMiddlewares = (api) => {
 }
 
 const configureRoutes = (api) => {
-    api.use('*', (req, res) => {
-        res.json({ message: 'Unknown endpoint' });
-    });
+    api
+        .use('/account', accountRoutes())
+        .use('*', (req, res) => {
+            res.json({ message: 'Unknown endpoint' });
+        });
 }
+
+export const apiRouter = new Router();
 
 export default {
     /**
