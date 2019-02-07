@@ -2,8 +2,7 @@ import { apiRouter } from '../api';
 import accountController from './account.controller';
 
 export default () => {
-    apiRouter
+    return apiRouter
         .post('/login', accountController.login)
-
-    return apiRouter;
+        .post('/register', accountController.register);
 }

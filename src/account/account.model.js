@@ -13,7 +13,8 @@ const accountSchema = new dbSchema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        validate: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/
     },
     /**
      * @name password

@@ -2,6 +2,21 @@ import Passport from 'passport';
 import Account from './account.model';
 
 export default {
+    /**
+     * register
+     * @param {String} email 
+     * @param {String} password 
+     */
+    register(email, password) {
+        const account = new Account({ email, password });
+
+        return account.save();
+    },
+    /**
+     * login
+     * @param {Object} req 
+     * @param {Object} res 
+     */
     login(req, res) {
         return new Promise((resolve, reject) => {
             return Passport.authenticate('local', (err, accountData) => {
@@ -24,7 +39,8 @@ export default {
                 if (!foundAcction) {
                     const admin = new Account({
                         email,
-                        password
+                        password,
+                        confirmed: true
                     });
 
                     return admin.save();
