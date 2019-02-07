@@ -5,6 +5,7 @@
   "license": "MIT",
   "author": "Dimitar <mailto.dimitrov@gmail.com>",
   "scripts": {
+    "prestart": "yarn",
     "start": "NODE_ENV=dev nodemon"
   },
   "dependencies": {
