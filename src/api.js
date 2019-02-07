@@ -11,17 +11,19 @@ import Config from './config';
 import Account from './account/account.model';
 import accountRoutes from './account/account.routes';
 
-const configureAuth = (options = {}) => {
-    const localOptions = {
-        session: false,
-        passReqToCallback: true,
-        usernameField: 'email',
-        passwordField: 'password',
-    };
+const localDefaults = {
+    session: false,
+    passReqToCallback: true,
+    usernameField: 'email',
+    passwordField: 'password'
+};
 
-    Passport.use('local', new Strategy(localOptions, (req, email, password, done) => {
-        console.log(email);
-        
+const configureAuth = (options = {}) => {
+    const localOptions = Object.assign({}, localDefaults, options);
+
+    Passport.use('local', new Strategy(localOptions, (req, email, password, done) => {        
+        console.log(12)
+
         Account.findOne({ email })
             .then((foundUser) => {
                 if (!foundUser) {

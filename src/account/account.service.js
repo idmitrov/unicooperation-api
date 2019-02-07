@@ -4,7 +4,7 @@ import Account from './account.model';
 export default {
     login(req, res) {
         return new Promise((resolve, reject) => {
-            Passport.authenticate('local', (err, accountData) => {
+            return Passport.authenticate('local', (err, accountData) => {
                 if (err) {
                     reject(err);
                 }
