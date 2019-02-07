@@ -1,6 +1,10 @@
 import { dbSchema, dbModel } from '../db';
 import Utils from '../utils';
 
+const accountSchemaOptions = {
+    timestamps: true
+};
+
 const accountSchema = new dbSchema({
     /**
      * @name email
@@ -19,8 +23,16 @@ const accountSchema = new dbSchema({
         type: String,
         required: true,
         minlength: 6
+    },
+    /**
+     * @name confirmed
+     * @type Boolean
+     */
+    confirmed: {
+        type: Boolean,
+        default: false
     }
-});
+}, accountSchemaOptions);
 
 /**
  * Compare candidate password with user.password
