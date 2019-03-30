@@ -25,6 +25,11 @@ export default {
         return University.findOne({ name })
             .select(['name', 'rating', 'mobileNumber']);
     },
+    /**
+     * Create new university
+     * @name create
+     * @param {Object} universityData
+     */
     create(universityData) {
         const newUniversity = new University(universityData);
 
