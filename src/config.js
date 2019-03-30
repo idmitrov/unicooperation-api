@@ -20,5 +20,13 @@ export default {
         email: cfg.ADMIN_EMAIL,
         username: cfg.ADMIN_USERNAME,
         password: cfg.ADMIN_PASSWORD,
+    },
+    smtp: {
+        secure: cfg.SMTP_SECURE,
+        host: cfg.SMTP_HOST,
+        port: cfg.SMTP_PORT,
+        service: cfg.SMTP_SERVICE,
+        user: cfg.SMTP_USER,
+        password: cfg.SMTP_PASSWORD
     }
 }

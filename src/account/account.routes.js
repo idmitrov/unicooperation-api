@@ -1,8 +1,11 @@
-import { apiRouter } from '../api';
+import { Router } from 'express';
 import accountController from './account.controller';
 
-export default () => {
-    return apiRouter
-        .post('/login', accountController.login)
-        .post('/register', accountController.register);
-}
+const router = new Router();
+
+router
+    .post('/login', accountController.login)
+    .post('/register', accountController.register)
+    .post('/reset', accountController.reset);
+
+export default router;

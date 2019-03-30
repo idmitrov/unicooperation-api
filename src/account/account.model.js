@@ -1,11 +1,34 @@
 import { dbSchema, dbModel } from '../db';
 import Utils from '../utils';
 
+export const accountType = {
+    partner: 'Partner',
+    student: 'Student',
+    university: 'University',
+    admin: 'Admin'
+};
+
 const accountSchemaOptions = {
     timestamps: true
 };
 
 const accountSchema = new dbSchema({
+    /**
+     * @name avatar
+     * @type String
+     */
+    avatar: {
+        type: String,
+        default: null
+    },
+    /**
+     * @name confirmed
+     * @type Boolean
+     */
+    confirmed: {
+        type: Boolean,
+        default: false
+    },
     /**
      * @name email
      * @type String
@@ -26,12 +49,21 @@ const accountSchema = new dbSchema({
         minlength: 6
     },
     /**
-     * @name confirmed
-     * @type Boolean
+     * @name profileId
+     * @type Object
      */
-    confirmed: {
-        type: Boolean,
-        default: false
+    profileId: {
+       type: dbSchema.Types.ObjectId,
+       refPath: 'type'
+    },
+    /**
+     * @name type
+     * @type String
+     */
+    type: {
+        type: String,
+        required: true,
+        enum: Object.values(accountType)
     }
 }, accountSchemaOptions);
 
@@ -41,6 +73,12 @@ const accountSchema = new dbSchema({
  */
 accountSchema.methods.comparePasswords = function(possiblePassword) {
     return Utils.compareHashes(possiblePassword, this.password);
+}
+
+accountSchema.methods.getPublicFields = function() {
+    const { type, profileId, email, confirmed, avatar } = this;
+
+    return { type, profileId, email, confirmed, avatar };
 }
 
 accountSchema.pre('save', function(next) {

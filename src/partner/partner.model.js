@@ -1,10 +1,10 @@
 import { dbSchema, dbModel } from '../db';
 
-const universitySchemaOptions = {
+const partnerSchemaOptions = {
     timestamps: true
 };
 
-const universitySchema = new dbSchema({
+const partnerSchema = new dbSchema({
     /**
      * @name accountId
      * @type String
@@ -30,27 +30,12 @@ const universitySchema = new dbSchema({
         required: true
     },
     /**
-     * @name partners
-     * @type Array
-     */
-    partners: [
-        { type: dbSchema.Types.ObjectId, ref: 'Partner' }
-    ],
-    /**
-     * @name rating
-     * @type Number
-     */
-    rating: {
-        type: Number,
-        default: 0
-    },
-    /**
      * @name students
      * @type Array
      */
-    students: [
-        { type: dbSchema.Types.ObjectId, ref: 'Student' }
+    universities: [
+        { type: dbSchema.Types.ObjectId, ref: 'University' }
     ]
-}, universitySchemaOptions);
+}, partnerSchemaOptions);
 
-export default dbModel('University', universitySchema);
+export default dbModel('Partner', partnerSchema);

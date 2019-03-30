@@ -7,9 +7,15 @@ import Passport from 'passport';
 import { Strategy } from 'passport-local';
 import jwt from 'jsonwebtoken';
 
-import Config from './config'; 
+import Config from './config';
+
 import Account from './account/account.model';
+
+import adminRoutes from './admin/admin.routes';
 import accountRoutes from './account/account.routes';
+import studentRoutes from './student/student.routes';
+import universityRoutes from './university/university.routes';
+import partnerRoutes from './partner/partner.routes';
 
 const localDefaults = {
     session: false,
@@ -21,24 +27,25 @@ const localDefaults = {
 const configureAuth = (options = {}) => {
     const localOptions = Object.assign({}, localDefaults, options);
 
-    Passport.use('local', new Strategy(localOptions, (req, email, password, done) => {        
-        console.log(12)
-
+    Passport.use('local', new Strategy(localOptions, (req, email, password, done) => {
         Account.findOne({ email })
-            .then((foundUser) => {
-                if (!foundUser) {
+            .then((foundAccount) => {
+                if (!foundAccount) {
                     return done({ message: 'Unauthenticated' });
                 }
 
-                foundUser.comparePasswords(password, foundUser.password)
+                foundAccount.comparePasswords(password, foundAccount.password)
                     .then((passwordMatch) => {
                         if (!passwordMatch) {
                             return done({ message: 'Invalid credentials' });
                         }
 
                         const userData = {
-                            token: jwt.sign({ sub: foundUser._id, password: foundUser.password }, Config.api.secret),
-                            email: foundUser.email
+                            token: jwt.sign({ sub: foundAccount._id, password: foundAccount.password }, Config.api.secret),
+                            email: foundAccount.email,
+                            avatar: foundAccount.avatar,
+                            type: foundAccount.type,
+                            profileId: foundAccount.profileId
                         }
 
                         return done(null, userData);
@@ -57,10 +64,29 @@ const configureMiddlewares = (api) => {
 
 const configureRoutes = (api) => {
     api
-        .use('/account', accountRoutes())
-        .use('*', (req, res) => {
-            res.json({ message: 'Unknown endpoint' });
-        });
+        .use('/university', universityRoutes)
+        .use('/student', studentRoutes)
+        .use('/account', accountRoutes)
+        .use('/partner', partnerRoutes)
+        .use('/admin', adminRoutes)
+        .use('*', (req, res, next) => next('Unknown endpoint'));
+}
+
+const handleErrors = (api) => {
+    api.use((ex, req, res, next) => {
+        if (ex) {
+            let errors = [ex.message ? ex.message : ex];
+
+            if (ex.errors) {
+                errors = Object.keys(ex.errors)
+                    .map((errKey) => ex.errors[errKey].properties.message);
+            }
+
+            return res
+                .status(ex.status ? ex.status : 400)
+                .json({ data: null, errors });
+        }
+    });
 }
 
 export const apiRouter = new Router();
@@ -77,6 +103,7 @@ export default {
         configureAuth();
         configureMiddlewares(api);
         configureRoutes(api);
+        handleErrors(api);
 
         return http
             .createServer(api)
