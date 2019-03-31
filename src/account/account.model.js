@@ -54,7 +54,8 @@ const accountSchema = new dbSchema({
      */
     profileId: {
        type: dbSchema.Types.ObjectId,
-       refPath: 'type'
+       refPath: 'type',
+       default: null
     },
     /**
      * @name type
