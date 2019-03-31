@@ -11,7 +11,8 @@ const studentSchema = new dbSchema({
      */
     accountId: {
         type: dbSchema.Types.ObjectId,
-        ref: 'Account'
+        ref: 'Account',
+        required: true
     },
     /**
      * @name facultyId
@@ -34,14 +35,16 @@ const studentSchema = new dbSchema({
      * @type String
      */
     lastName: {
-        type: String
+        type: String,
+        default: null
     },
     /**
      * @name middleName
      * @type String
      */
     middleName: {
-        type: String
+        type: String,
+        default: null
     },
     /**
      * @name mobileNumber

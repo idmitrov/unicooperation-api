@@ -11,7 +11,8 @@ const universitySchema = new dbSchema({
      */
     accountId: {
         type: dbSchema.Types.ObjectId,
-        ref: 'Account'
+        ref: 'Account',
+        required: true
     },
     /**
      * @name mobileNumber
