@@ -70,12 +70,17 @@ const accountSchema = new dbSchema({
 
 /**
  * Compare candidate password with user.password
+ * @name comparePasswords
  * @param {String} possiblePassword
  */
 accountSchema.methods.comparePasswords = function(possiblePassword) {
     return Utils.compareHashes(possiblePassword, this.password);
 }
 
+/**
+ * Returns account public fields only
+ * @name getPublicFields
+ */
 accountSchema.methods.getPublicFields = function() {
     const { type, profileId, email, confirmed, avatar } = this;
 
