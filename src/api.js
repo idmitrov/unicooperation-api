@@ -17,6 +17,7 @@ import adminRoutes from './admin/admin.routes';
 import accountRoutes from './account/account.routes';
 import studentRoutes from './student/student.routes';
 import universityRoutes from './university/university.routes';
+import nomenclatursRoutes from './nomenclatures/nomenclatures.routes';
 import partnerRoutes from './partner/partner.routes';
 
 const localDefaults = {
@@ -66,6 +67,7 @@ const configureMiddlewares = (api) => {
 
 const configureRoutes = (api) => {
     api
+        .use('/nom', nomenclatursRoutes)
         .use('/university', universityRoutes)
         .use('/student', studentRoutes)
         .use('/account', accountRoutes)
