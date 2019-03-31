@@ -1,12 +1,6 @@
 import { dbSchema, dbModel } from '../db';
 import Utils from '../utils';
-
-export const accountType = {
-    partner: 'Partner',
-    student: 'Student',
-    university: 'University',
-    admin: 'Admin'
-};
+import { accountType } from './account.constants';
 
 const accountSchemaOptions = {
     timestamps: true
