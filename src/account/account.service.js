@@ -1,6 +1,7 @@
 import Passport from 'passport';
 
-import Account, { accountType } from './account.model';
+import Account from './account.model';
+import { accountType } from './account.constants';
 
 import Admin from '../admin/admin.model';
 import Partner from '../partner/partner.model';
