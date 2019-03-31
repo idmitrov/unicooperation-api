@@ -34,7 +34,7 @@ const configureAuth = (options = {}) => {
         Account.findOne({ email })
             .then((foundAccount) => {
                 if (!foundAccount) {
-                    return done({ message: 'Unauthenticated' });
+                    return done({ message: 'Invalid credentials' });
                 }
 
                 foundAccount.comparePasswords(password, foundAccount.password)
