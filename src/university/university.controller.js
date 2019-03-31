@@ -20,9 +20,9 @@ export default {
             });
     },
     create(req, res) {
-        const universityData = req.body;
-
-        return universityService.create(universityData)
+        const { name, countryCode } = req.body;
+        
+        return universityService.create(name, countryCode, req.account.id)
             .then((createdUniversity) => {
                 return res.json({
                     data: createdUniversity

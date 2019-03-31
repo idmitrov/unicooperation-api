@@ -30,8 +30,8 @@ export default {
      * @name create
      * @param {Object} universityData
      */
-    create(universityData) {
-        const newUniversity = new University(universityData);
+    create(name, countryCode, accountId) {
+        const newUniversity = new University({ name, countryCode, accountId });
 
         return newUniversity.save();
     }
