@@ -9,6 +9,8 @@ import jwt from 'jsonwebtoken';
 
 import Config from './config';
 
+import seedNomenclatures from './nomenclatures/nomenclatures.seed';
+
 import Account from './account/account.model';
 
 import adminRoutes from './admin/admin.routes';
@@ -88,7 +90,6 @@ const handleErrors = (api) => {
         }
     });
 }
-
 export const apiRouter = new Router();
 
 export default {
@@ -100,6 +101,7 @@ export default {
     start(host, port) {
         const api = express();
 
+        seedNomenclatures();
         configureAuth();
         configureMiddlewares(api);
         configureRoutes(api);
