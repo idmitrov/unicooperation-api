@@ -14,6 +14,12 @@ export default {
     filterByName(req, res) {
         const { name, skip, take } = req.query;
 
+        if (!name) {
+            return res.json({
+                data: []
+            });
+        }
+
         return universityService.filterByName(name, skip, take)
             .then((foundUniversities) => {
                 return res.json({ data: foundUniversities });
