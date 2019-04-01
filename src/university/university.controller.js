@@ -24,9 +24,12 @@ export default {
         
         return universityService.create(name, countryCode, req.account.id)
             .then((createdUniversity) => {
-                return res.json({
-                    data: createdUniversity
-                });
+                // TODO: Extract it in account controller/edit
+                req.account.profileId = createdUniversity.id;
+                req.account.save()
+                    .then((savedAccount) => {
+                        return res.json({ savedAccount, createdUniversity});
+                    });
             });
     }
 };
