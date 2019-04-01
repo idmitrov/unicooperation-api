@@ -2,19 +2,17 @@ import studentService from './student.service';
 
 export default {
     create(req, res, next) {
-        const studentData = req.body;
+        const { firstName, facultyId, universityId } = req.body;
 
-        return studentService.create(studentData)
+        return studentService.create(firstName, facultyId, universityId, req.account.id)
             .then((createdStudent) => {
-                return res.json({
-                    data: createdStudent
-                });
+                // TODO: Extract it in account controller/edit
+                req.account.profileId = createdStudent.id;
+                req.account.save()
+                    .then((savedAccount) => {
+                        return res.json({ savedAccount, createdStudent});
+                    });
             })
-            .catch((error) => {
-                next({
-                    status: 409,
-                    message: error.errmsg || error
-                })
-            });
+            .catch((error) => next({ message: error.errmsg || error }));
     }
 };
