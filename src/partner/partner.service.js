@@ -1,8 +1,8 @@
 import Partner from './partner.model';
 
 export default {
-    create(partnerData) {        
-        const newPartner = new Partner(partnerData);
+    create(name, countryCode, accountId) {        
+        const newPartner = new Partner({name, countryCode, accountId});
 
         return newPartner.save();
     }
