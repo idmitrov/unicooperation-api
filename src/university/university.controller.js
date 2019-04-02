@@ -30,9 +30,7 @@ export default {
         
         return universityService.create(name, countryCode, req.account.id)
             .then((createdUniversity) => {
-                // TODO: Extract it in account controller/edit
-                req.account.profileId = createdUniversity.id;
-                req.account.save()
+                req.account.setProfileId(createdUniversity.id)
                     .then((savedAccount) => {
                         return res.json({ savedAccount, createdUniversity});
                     });

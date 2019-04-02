@@ -6,9 +6,7 @@ export default {
 
         return studentService.create(firstName, facultyId, universityId, req.account.id)
             .then((createdStudent) => {
-                // TODO: Extract it in account controller/edit
-                req.account.profileId = createdStudent.id;
-                req.account.save()
+                req.account.setProfileId(createdStudent.id)
                     .then((savedAccount) => {
                         return res.json({ savedAccount, createdStudent});
                     });

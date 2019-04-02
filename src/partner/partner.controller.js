@@ -6,11 +6,9 @@ export default {
 
         return partnerService.create(name, countryCode, req.account.id)
             .then((createdPartner) => {
-                // TODO: Extract it in account controller/edit
-                req.account.profileId = createdPartner.id;
-                req.account.save()
+                req.account.setProfileId(createdPartner.id)
                     .then((savedAccount) => {
-                        return res.json({ savedAccount, createdPartner });
+                        return res.json({ savedAccount, createdPartner});
                     });
             })
             .catch((error) => next(error.errmsg || error));
