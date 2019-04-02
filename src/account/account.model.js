@@ -81,6 +81,12 @@ accountSchema.methods.getPublicFields = function() {
     return { type, profileId, email, confirmed, avatar };
 }
 
+accountSchema.methods.setProfileId = function(profileId) {
+    this.profileId = profileId;
+
+    return this.save();
+}
+
 accountSchema.pre('save', function(next) {
     if (this.isModified('password')) {
         return Utils.generateSalt()
