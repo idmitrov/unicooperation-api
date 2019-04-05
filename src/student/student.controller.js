@@ -8,7 +8,9 @@ export default {
             .then((createdStudent) => {
                 req.account.setProfileId(createdStudent.id)
                     .then((savedAccount) => {
-                        return res.json({ savedAccount, createdStudent});
+                        const data = { account: savedAccount };
+                        
+                        return res.json({ data });
                     });
             })
             .catch((error) => next({ message: error.errmsg || error }));

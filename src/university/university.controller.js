@@ -32,10 +32,7 @@ export default {
             .then((createdUniversity) => {
                 req.account.setProfileId(createdUniversity.id)
                     .then((savedAccount) => {
-                        const data = {
-                            account: savedAccount,
-                            university: createdUniversity
-                        };
+                        const data = { account: savedAccount };
                         
                         return res.json({ data });
                     });
