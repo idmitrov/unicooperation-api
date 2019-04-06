@@ -1,6 +1,7 @@
 import http from 'http';
 import express, { Router } from 'express';
 import cors from 'cors';
+import io from 'socket.io';
 import { urlencoded, json } from 'body-parser';
 
 import Passport from 'passport';
@@ -92,6 +93,15 @@ const handleErrors = (api) => {
         }
     });
 }
+
+const configureSocketIO = (client) => {
+    const connectedClients = {};
+
+    client.on('disconnect', () => {
+        console.log('Client disconnected');
+    });
+}
+
 export const apiRouter = new Router();
 
 export default {
@@ -109,8 +119,11 @@ export default {
         configureRoutes(api);
         handleErrors(api);
 
-        return http
-            .createServer(api)
-            .listen(port, host);
+        const server = http.createServer(api)
+        const socketIO = io(server);
+        
+        server.listen(port, host, () => {
+            socketIO.on('connection', (client) => configureSocketIO(client));
+        });
     }
 };
