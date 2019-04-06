@@ -78,6 +78,21 @@ const studentSchema = new dbSchema({
         type: dbSchema.Types.ObjectId,
         ref: 'University',
         required: true
+    },
+    facebookProfileUrl: {
+        type: String,
+        default: null,
+        unique: true
+    },
+    linkedInProfileUrl: {
+        type: String,
+        default: null,
+        unique: true
+    },
+    instagramProfileUrl: {
+        type: String,
+        default: null,
+        unique: true
     }
 }, studentSchemaOptions);
 
