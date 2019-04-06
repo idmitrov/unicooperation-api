@@ -7,5 +7,6 @@ const router = new Router();
 
 router
     .post('/', [auth()], studentController.create)
+    .get('/me', [auth()], studentController.me)
 
 export default router;

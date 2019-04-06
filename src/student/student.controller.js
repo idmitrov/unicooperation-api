@@ -1,6 +1,13 @@
 import studentService from './student.service';
 
 export default {
+    me(req, res, next) {
+        studentService.findById(req.account.profileId)
+            .then((foundProfile) => {
+                return res.json({ data: foundProfile });
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
+    },
     create(req, res, next) {
         const { firstName, facultyId, universityId } = req.body;
 
