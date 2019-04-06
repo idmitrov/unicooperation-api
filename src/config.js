@@ -14,7 +14,8 @@ export default {
     api: {
         host: cfg.API_HOST,
         port: cfg.API_PORT,
-        secret: cfg.API_SECRET
+        secret: cfg.API_SECRET,
+        origins: cfg.API_ALLOWED_ORIGINS
     },
     admin: {
         email: cfg.ADMIN_EMAIL,

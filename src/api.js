@@ -120,7 +120,7 @@ export default {
         handleErrors(api);
 
         const server = http.createServer(api)
-        const socketIO = io(server);
+        const socketIO = io(server, { origins: Config.api.origins });
         
         server.listen(port, host, () => {
             socketIO.on('connection', (client) => configureSocketIO(client));
