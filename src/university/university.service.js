@@ -1,6 +1,12 @@
 import University from './university.model';
 
 export default {
+    /**
+     * Find a given university by provided id
+     * @name findById
+     * @param {String} id
+     * @param {Array} projection
+     */
     findById(id, projection = []) {
         return University
             .findById(id)
