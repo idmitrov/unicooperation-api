@@ -1,6 +1,11 @@
 import University from './university.model';
 
 export default {
+    findById(id, projection = []) {
+        return University
+            .findById(id)
+            .select(projection);
+    },
     /**
      * Filter universities by name which starts with a given query
      * @name filter

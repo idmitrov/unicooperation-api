@@ -6,6 +6,7 @@ import { auth } from '../account/account.middleware';
 const router = new Router();
 
 router
+    .get('/me', [auth()], universityController.me)
     .get('/findByName/:name', [auth()], universityController.findByName)
     .get('/filter',[auth()], universityController.filterByName)
     .post('/', [auth()], universityController.create)
