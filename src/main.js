@@ -2,13 +2,15 @@ import Database from './db';
 import Api from './api';
 import Config from './config';
 import Logger from './logger';
-import accountService from './account/account.service';
-import { accountType } from './account/account.constants';
+
+import seedAccounts from './account/account.seed';
+import seedNomenclatures from './nomenclatures/nomenclatures.seed';
 
 try {
     Database.connect(Config.db.host, Config.db.port, Config.db.name)
         .then(() => {
-            accountService.seedAccount(Config.admin.email, Config.admin.password, accountType.admin);
+            seedNomenclatures();
+            seedAccounts();
         })
         .then(() => {
             Api.start(Config.api.host, Config.api.port);
