@@ -21,6 +21,8 @@ import universityRoutes from './university/university.routes';
 import nomenclatursRoutes from './nomenclatures/nomenclatures.routes';
 import partnerRoutes from './partner/partner.routes';
 
+import publicationEvents from './publication/publication.events';
+
 const localDefaults = {
     session: false,
     passReqToCallback: true,
@@ -43,14 +45,10 @@ const configureAuth = (options = {}) => {
                         if (!passwordMatch) {
                             return done({ message: 'Invalid credentials' });
                         }
-
-                        const userData = {
+                        
+                        const userData = Object.assign({}, foundAccount.getPublicFields(), {
                             token: jwt.sign({ sub: foundAccount._id, password: foundAccount.password }, Config.api.secret),
-                            email: foundAccount.email,
-                            avatar: foundAccount.avatar,
-                            type: foundAccount.type,
-                            profileId: foundAccount.profileId
-                        }
+                        });
 
                         return done(null, userData);
                     })
@@ -96,6 +94,10 @@ const handleErrors = (api) => {
 
 const configureSocketIO = (client) => {
     const connectedClients = {};
+    
+    client.on('join', (token) => {
+        console.log(token);
+    })
 
     client.on('disconnect', () => {
         console.log('Client disconnected');
@@ -123,7 +125,7 @@ export default {
         const socketIO = io(server, { origins: Config.api.origins });
         
         server.listen(port, host, () => {
-            socketIO.on('connection', (client) => configureSocketIO(client));
+            socketIO.of('/publications', publicationEvents);
         });
     }
 };
