@@ -39,18 +39,19 @@ export default {
         return Account.findOne({ email });
     },
     /**
-     * Seed Admin account
+     * Seed account
      * @param {String} email 
-     * @param {String} password 
+     * @param {String} password
+     * @param {String} accountType
      */
-    seedAdmin(email, password) {
+    seedAccount(email, password, accountType) {
         return Account.findOne({ email })
-            .then((foundAcction) => {
-                if (!foundAcction) {
-                    return this.register(email, password, accountType.admin);
+            .then((foundAccount) => {
+                if (!foundAccount) {
+                    return this.register(email, password, accountType);
                 }
 
-                return Promise.resolve(foundAcction);
+                return Promise.resolve(foundAccount);
             });
     }
 }
