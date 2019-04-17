@@ -40,7 +40,7 @@ export default {
         
         return universityService.create(name, countryCode, req.account.id)
             .then((createdUniversity) => {
-                req.account.setProfileId(createdUniversity.id)
+                req.account.setProfile(createdUniversity)
                     .then((savedAccount) => {
                         const data = { account: savedAccount };
                         

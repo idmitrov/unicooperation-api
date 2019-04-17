@@ -43,10 +43,10 @@ const accountSchema = new dbSchema({
         minlength: 6
     },
     /**
-     * @name profileId
+     * @name profile
      * @type Object
      */
-    profileId: {
+    profile: {
        type: dbSchema.Types.ObjectId,
        refPath: 'type',
        default: null
@@ -76,13 +76,13 @@ accountSchema.methods.comparePasswords = function(possiblePassword) {
  * @name getPublicFields
  */
 accountSchema.methods.getPublicFields = function() {
-    const { type, profileId, email, confirmed, avatar } = this;
+    const { type, profile, email, confirmed, avatar } = this;
 
-    return { type, profileId, email, confirmed, avatar };
+    return { type, profile, email, confirmed, avatar };
 }
 
-accountSchema.methods.setProfileId = function(profileId) {
-    this.profileId = profileId;
+accountSchema.methods.setProfile = function(setProfile) {
+    this.profile = setProfile;
 
     return this.save();
 }
