@@ -92,18 +92,6 @@ const handleErrors = (api) => {
     });
 }
 
-const configureSocketIO = (client) => {
-    const connectedClients = {};
-    
-    client.on('join', (token) => {
-        console.log(token);
-    })
-
-    client.on('disconnect', () => {
-        console.log('Client disconnected');
-    });
-}
-
 export const apiRouter = new Router();
 
 export default {
