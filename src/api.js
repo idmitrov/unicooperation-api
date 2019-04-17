@@ -10,8 +10,6 @@ import jwt from 'jsonwebtoken';
 
 import Config from './config';
 
-import seedNomenclatures from './nomenclatures/nomenclatures.seed';
-
 import Account from './account/account.model';
 
 import adminRoutes from './admin/admin.routes';
@@ -23,14 +21,14 @@ import partnerRoutes from './partner/partner.routes';
 
 import publicationEvents from './publication/publication.events';
 
-const localDefaults = {
-    session: false,
-    passReqToCallback: true,
-    usernameField: 'email',
-    passwordField: 'password'
-};
-
 const configureAuth = (options = {}) => {
+    const localDefaults = {
+        session: false,
+        passReqToCallback: true,
+        usernameField: 'email',
+        passwordField: 'password'
+    };
+
     const localOptions = Object.assign({}, localDefaults, options);
 
     Passport.use('local', new Strategy(localOptions, (req, email, password, done) => {
@@ -75,6 +73,10 @@ const configureRoutes = (api) => {
         .use('*', (req, res, next) => next('Unknown endpoint'));
 }
 
+const configureSockets = (socketIO) => {
+    socketIO.of('/publications', publicationEvents);
+}
+
 const handleErrors = (api) => {
     api.use((ex, req, res, next) => {
         if (ex) {
@@ -103,7 +105,6 @@ export default {
     start(host, port) {
         const api = express();
 
-        seedNomenclatures();
         configureAuth();
         configureMiddlewares(api);
         configureRoutes(api);
@@ -113,7 +114,7 @@ export default {
         const socketIO = io(server, { origins: Config.api.origins });
         
         server.listen(port, host, () => {
-            socketIO.of('/publications', publicationEvents);
+            configureSockets(socketIO);
         });
     }
 };
