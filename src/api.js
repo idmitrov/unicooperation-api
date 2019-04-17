@@ -11,6 +11,7 @@ import jwt from 'jsonwebtoken';
 import Config from './config';
 
 import Account from './account/account.model';
+import { authSocket } from './account/account.middleware';
 
 import adminRoutes from './admin/admin.routes';
 import accountRoutes from './account/account.routes';
@@ -74,7 +75,9 @@ const configureRoutes = (api) => {
 }
 
 const configureSockets = (socketIO) => {
-    socketIO.of('/publications', publicationEvents);
+    socketIO
+        .of('/publications', publicationEvents)
+        .use(authSocket);
 }
 
 const handleErrors = (api) => {
@@ -113,7 +116,7 @@ export default {
         const server = http.createServer(api)
         const socketIO = io(server, { origins: Config.api.origins });
         
-        server.listen(port, host, () => {
+        server.listen(port, host, () => {            
             configureSockets(socketIO);
         });
     }

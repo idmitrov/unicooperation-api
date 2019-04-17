@@ -1,13 +1,9 @@
 import accountService from '../account/account.service';
 
-const connections = {
+const connections = {};
 
-};
-
-export default (socket) => {
-    console.log(socket.handshake.query)
-    
-    socket.on('join', () => {
-    
+export default (client) => {
+    client.on('join', () => {
+        connections[client.account.id] = client;
     });
 }
