@@ -13,7 +13,7 @@ export default {
 
         return studentService.create(firstName, facultyId, universityId, req.account.id)
             .then((createdStudent) => {
-                req.account.setProfile(createdStudent)
+                req.account.setProfileId(createdStudent.id)
                     .then((savedAccount) => {
                         const data = { account: savedAccount };
                         

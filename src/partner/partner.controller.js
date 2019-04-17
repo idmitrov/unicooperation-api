@@ -6,7 +6,7 @@ export default {
 
         return partnerService.create(name, countryCode, req.account.id)
             .then((createdPartner) => {
-                req.account.setProfile(createdPartner)
+                req.account.setProfileId(createdPartner.id)
                     .then((savedAccount) => {
                         const data = { account: savedAccount };
 
