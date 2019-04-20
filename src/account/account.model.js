@@ -87,6 +87,10 @@ accountSchema.methods.setProfileId = function(profileId) {
     return this.save();
 }
 
+accountSchema.methods.getProfile = function() {
+    return Account.populate(this, 'profileId')
+}
+
 accountSchema.pre('save', function(next) {
     if (this.isModified('password')) {
         return Utils.generateSalt()
@@ -103,4 +107,6 @@ accountSchema.pre('save', function(next) {
     return next();
 });
 
-export default new dbModel('Account', accountSchema);
+const Account = new dbModel('Account', accountSchema);
+
+export default Account;
