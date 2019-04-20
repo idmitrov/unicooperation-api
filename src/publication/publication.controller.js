@@ -9,10 +9,10 @@ export default {
             case accountType.student: {
                 req.account.getProfile()
                     .then((accountWithProfile) => {
-                        publicationService.getList(accountWithProfile.profileId.universityId)
-                            .then((publications) => {
-                                return res.json({ data: publications });
-                            });
+                        return publicationService.getList(accountWithProfile.profileId.universityId)
+                    })
+                    .then((publications) => {
+                        return res.json({ data: publications });
                     });
                 break;
             }
