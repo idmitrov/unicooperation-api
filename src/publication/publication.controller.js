@@ -4,6 +4,7 @@ import { accountType } from '../account/account.constants';
 export default {
     list(req, res, next) {
         const { account } = req;
+
         switch (account.type) {
             case accountType.student: {
                 req.account.getProfile()
@@ -16,7 +17,7 @@ export default {
                 break;
             }
             case accountType.university: {
-                publicationService.getList(account.id)
+                publicationService.getList(account.profileId)
                     .then((publications) => {
                         return res.json({ data: publications });
                     });
