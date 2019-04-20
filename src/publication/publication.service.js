@@ -4,6 +4,20 @@ let rooms = {};
 
 export default {
     /**
+     * Get publications by given sort criteria and skip/limit
+     * @name getList
+     * @param {Number} skip 
+     * @param {Number} limit 
+     */
+    getList(publisherId, sort = 'createdAt', skip = 0, limit = 10) {
+        console.log(publisherId);
+        
+        return Publication
+            .find({ publisher: publisherId})
+            .sort(`-${sort}`)
+            .limit(limit);
+    },
+    /**
      * Create new publication
      * @name create
      * @param {String} publisherType 
