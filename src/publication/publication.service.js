@@ -31,7 +31,12 @@ export default {
             content
         });
 
-        return publication.save();
+        return publication.save()
+            .then(() => {
+                // TODO: Think about, getting list with start of createdPost and limit 10 i.e
+                // the newly created post should be the 1st one (latest)
+                return this.getList(feed);
+            });
     },
     /**
      * Join to room by given roomId

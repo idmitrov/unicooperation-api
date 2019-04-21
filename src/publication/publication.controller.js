@@ -11,7 +11,7 @@ export default {
                     .then((accountWithProfile) => {
                         // TODO: Get params from releaseEvents.query
                         const accountProfile = accountWithProfile.profileId;
-                        
+
                         return publicationService.getList(accountProfile.universityId, 'createdAt', 0, 10, ['publisher']);
                     })
                     .then((publications) => {
@@ -54,8 +54,8 @@ export default {
                 }
 
                 return publicationService.create(type, publisherId, feedId, content)
-                    .then((createdPublication) => {
-                        return res.json({ data: createdPublication });
+                    .then((publicationsUpdated) => {
+                        return res.json({ data: publicationsUpdated });
                     })
                     .catch((error) => next({ message: error.errmsg || error }));
             })
