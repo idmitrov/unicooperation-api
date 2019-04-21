@@ -10,34 +10,26 @@ export default {
                 req.account.getProfile()
                     .then((accountWithProfile) => {
                         // TODO: Get params from releaseEvents.query
-                        return publicationService.getList(
-                            accountWithProfile.profileId.universityId,
-                            'createdAt',
-                            0,
-                            10,
-                            ['publisher']
-                        )
+                        const accountProfile = accountWithProfile.profileId;
+                        
+                        return publicationService.getList(accountProfile.universityId, 'createdAt', 0, 10, ['publisher']);
                     })
                     .then((publications) => {
                         return res.json({ data: publications });
-                    });
+                    })
+                    .catch((error) => next({ message: error.errmsg || error }));
                 break;
             }
             case accountType.university: {
                 // TODO: Get params from releaseEvents.query
-                publicationService.getList(
-                    account.profileId,
-                    'createdAt',
-                    0,
-                    10,
-                    ['publisher']
-                )
+                publicationService.getList(account.profileId, 'createdAt', 0, 10, ['publisher'])
                     .then((publications) => {
                         return res.json({ data: publications });
-                    });
+                    })
+                    .catch((error) => next({ message: error.errmsg || error }));
                 break;
             }
-            default: throw new Error('Invalid account type');
+            default: return next({ message: 'Invalid account type' });
         }
     },
     create(req, res, next) {
