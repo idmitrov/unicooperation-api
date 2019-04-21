@@ -35,7 +35,7 @@ export default {
             .then(() => {
                 // TODO: Think about, getting list with start of createdPost and limit 10 i.e
                 // the newly created post should be the 1st one (latest)
-                return this.getList(feed);
+                return this.getList(feed, 'createdAt', 0, 10, ['publisher']);
             });
     },
     /**
