@@ -9,7 +9,14 @@ export default {
             case accountType.student: {
                 req.account.getProfile()
                     .then((accountWithProfile) => {
-                        return publicationService.getList(accountWithProfile.profileId.universityId)
+                        // TODO: Get params from releaseEvents.query
+                        return publicationService.getList(
+                            accountWithProfile.profileId.universityId,
+                            'createdAt',
+                            0,
+                            10,
+                            ['publisher']
+                        )
                     })
                     .then((publications) => {
                         return res.json({ data: publications });
@@ -17,7 +24,14 @@ export default {
                 break;
             }
             case accountType.university: {
-                publicationService.getList(account.profileId)
+                // TODO: Get params from releaseEvents.query
+                publicationService.getList(
+                    account.profileId,
+                    'createdAt',
+                    0,
+                    10,
+                    ['publisher']
+                )
                     .then((publications) => {
                         return res.json({ data: publications });
                     });

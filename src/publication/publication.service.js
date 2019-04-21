@@ -9,11 +9,10 @@ export default {
      * @param {Number} skip 
      * @param {Number} limit 
      */
-    getList(publisherId, sort = 'createdAt', skip = 0, limit = 10) {
-        console.log(publisherId);
-        
+    getList(publisherId, sort = 'createdAt', skip = 0, limit = 10, projection = []) {
         return Publication
             .find({ publisher: publisherId})
+            .populate(projection)
             .sort(`-${sort}`)
             .limit(limit);
     },
