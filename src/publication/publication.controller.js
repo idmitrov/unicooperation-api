@@ -47,8 +47,21 @@ export default {
         return req.account.getProfile()
             .then((accountWithProfile) => {
                 const publisherId = accountWithProfile.profileId.id;
+                let feedId = null;
 
-                return publicationService.create(type, publisherId, content)
+                switch (type) {
+                    case accountType.student: {
+                        feedId = accountWithProfile.profileId.universityId;
+                        break;
+                    }
+                    case accountType.university: {
+                        feedId = accountWithProfile.profileId.id;
+                        break;
+                    }
+                    default: throw new Error('Invalid account type');
+                }
+
+                return publicationService.create(type, publisherId, feedId, content)
                     .then((createdPublication) => {
                         return res.json({ data: createdPublication });
                     })

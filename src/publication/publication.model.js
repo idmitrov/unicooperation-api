@@ -6,6 +6,11 @@ const publicationSchemaOptions = {
 };
 
 const publicationSchema = new dbSchema({
+    feed: {
+        type: dbSchema.Types.ObjectId,
+        refPath: 'publisherType',
+        required: true
+    },
     /**
      * @name publisherType
      * @type {String}

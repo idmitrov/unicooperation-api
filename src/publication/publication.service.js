@@ -9,9 +9,9 @@ export default {
      * @param {Number} skip 
      * @param {Number} limit 
      */
-    getList(publisherId, sort = 'createdAt', skip = 0, limit = 10, projection = []) {
+    getList(feedId, sort = 'createdAt', skip = 0, limit = 10, projection = []) {
         return Publication
-            .find({ publisher: publisherId})
+            .find({ feed: feedId})
             .populate(projection)
             .sort(`-${sort}`)
             .limit(limit);
@@ -23,10 +23,11 @@ export default {
      * @param {Object} publisher 
      * @param {String} content 
      */
-    create(publisherType, publisher, content) {
+    create(publisherType, publisher, feed, content) {
         const publication = new Publication({
             publisherType,
             publisher,
+            feed,
             content
         });
 
