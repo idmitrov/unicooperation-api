@@ -1,24 +1,40 @@
 const rooms = {};
 
 /**
- * Add a socket to room
- * @name addClientToRoom
- * @param {String} roomId 
- * @param {WebSocket} client 
+ * Leave a given room
+ * @name leaveRoom
+ * @param {String|Number} roomId 
+ * @param {WebSocket} socket 
  */
-export const addClientToRoom = (roomId, client) => {
-    rooms[roomId] ? rooms[roomId].push(client) : rooms[roomId] = [client];
+export const leaveRoom = (roomId, socket) => {
+    socket.leave(roomId);
+
+    const room = rooms[roomId];
+    const clientToRemoveIndex = room.findIndex((c) => client.id === socket.id);
+
+    room.splice(clientToRemoveIndex, 1);
 }
 
 /**
- * Remove a socket from room
- * @name addClientToRoom
- * @param {String} roomId 
- * @param {WebSocket} client
+ * Join to a given room
+ * @name joinRoom
+ * @param {String|Number} roomId 
+ * @param {WebSocket} socket 
  */
-export const removeClientFromRoom = (roomId, clientId) => {
-    const room = rooms[roomId];
-    const clientToRemoveIndex = room.findIndex((c) => client.id === clientId);
+export const joinRoom = (roomId, socket) => {
+    socket.join(roomId);
 
-    room.splice(clientToRemoveIndex, 1);
+    rooms[roomId] ? rooms[roomId].push(socket) : rooms[roomId] = [socket];
+}
+
+
+/**
+ * Subscribe for socket event
+ * @name subscribeForEvent
+ * @param {String} event 
+ * @param {WebSocket} socket 
+ * @param {Function} handler 
+ */
+export const subscribeForEvent = (event, socket, handler) => {
+    socket.on(event, handler);
 }
