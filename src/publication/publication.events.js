@@ -3,8 +3,12 @@ import studentService from '../student/student.service';
 
 import { subscribeForEvent, joinRoom } from '../socket';
 
+export const publicationEventTypes = {
+    join: 'join'
+};
+
 export default (client) => {
-    subscribeForEvent('join', client, () => {
+    subscribeForEvent(publicationEventTypes.join, client, () => {
         const { account } = client;
 
         switch (account.type) {
