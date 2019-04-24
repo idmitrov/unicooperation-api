@@ -1,4 +1,5 @@
 import Publication from './publication.model';
+import { broadcastToRoom } from '../socket';
 
 export default {
     /**

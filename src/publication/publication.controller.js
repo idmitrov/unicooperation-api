@@ -1,5 +1,6 @@
 import publicationService from './publication.service';
 import { accountType } from '../account/account.constants';
+import { broadcastToRoom } from '../socket';
 
 export default {
     list(req, res, next) {
@@ -34,7 +35,7 @@ export default {
     },
     create(req, res, next) {
         const { content } = req.body;
-        const { type } = req.account;
+        const { type, id } = req.account;
 
         return req.account.getProfile()
             .then((accountWithProfile) => {
@@ -55,6 +56,8 @@ export default {
 
                 return publicationService.create(type, publisherId, feedId, content)
                     .then((publicationsUpdated) => {
+                        broadcastToRoom(feedId, id, 'update');
+
                         return res.json({ data: publicationsUpdated });
                     })
                     .catch((error) => next({ message: error.errmsg || error }));

@@ -11,6 +11,8 @@ import jwt from 'jsonwebtoken';
 import Config from './config';
 
 import Account from './account/account.model';
+
+import { init, handleNamespaceEvents } from './socket';
 import { authSocket } from './account/account.middleware';
 
 import adminRoutes from './admin/admin.routes';
@@ -77,9 +79,9 @@ const configureRoutes = (api) => {
 }
 
 const configureSockets = (socketIO) => {
-    socketIO
-        .of('/publications', publicationEvents)
-        .use(authSocket);
+    init(socketIO);
+
+    handleNamespaceEvents('/publications', publicationEvents, [authSocket]);
 }
 
 const handleErrors = (api) => {
