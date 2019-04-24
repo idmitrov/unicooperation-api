@@ -1,7 +1,5 @@
 import Publication from './publication.model';
 
-let rooms = {};
-
 export default {
     /**
      * Get publications by given sort criteria and skip/limit
@@ -37,16 +35,5 @@ export default {
                 // the newly created post should be the 1st one (latest)
                 return this.getList(feed, 'createdAt', 0, 10, ['publisher']);
             });
-    },
-    /**
-     * Join to room by given roomId
-     * @name join
-     * @param {String} roomId 
-     * @param {Object} client 
-     */
-    join(roomId, client) {
-        // TODO: Verify if needs check if client is already joined into that room
-        client.join(roomId);
-        rooms[roomId] ? rooms[roomId].push(client) : rooms[roomId] = [client];
     }
 };
