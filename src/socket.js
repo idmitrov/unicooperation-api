@@ -4,7 +4,7 @@ const rooms = {};
  * Add a socket to room
  * @name addClientToRoom
  * @param {String} roomId 
- * @param {Soc} client 
+ * @param {WebSocket} client 
  */
 export const addClientToRoom = (roomId, client) => {
     rooms[roomId] ? rooms[roomId].push(client) : rooms[roomId] = [client];
@@ -14,7 +14,7 @@ export const addClientToRoom = (roomId, client) => {
  * Remove a socket from room
  * @name addClientToRoom
  * @param {String} roomId 
- * @param {Soc} client 
+ * @param {WebSocket} client
  */
 export const removeClientFromRoom = (roomId, clientId) => {
     const room = rooms[roomId];
