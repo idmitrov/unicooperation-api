@@ -5,8 +5,12 @@ import { broadcastToRoom } from '../socket';
 export default {
     list(req, res, next) {
         const { account } = req;
-        const { sort, skip, limit } = req.query;
-
+        let { sort, skip, limit } = req.query;
+        
+        sort = sort === undefined ? 'createdAt' : sort;
+        skip = skip === undefined ? 0 : skip;
+        limit = limit === undefined ? 0 : limit;
+        
         switch (account.type) {
             case accountType.student: {
                 req.account.getProfile()
@@ -16,10 +20,10 @@ export default {
                         
                         return publicationService.getList(accountProfile.universityId, sort, skip, limit, populate);
                     })
-                    .then((publications) => {
+                    .then(([publications, count]) => {
                         const data = {
                             list: publications,
-                            hasMore: skip + limit <= publications.length
+                            hasMore: count > skip + limit
                         };
 
                         return res.json({ data });
@@ -31,10 +35,10 @@ export default {
                 const populate = ['publisher'];
 
                 publicationService.getList(account.profileId, sort, skip, limit, populate)
-                    .then((publications) => {
+                    .then(([publications, count]) => {
                         const data = {
                             list: publications,
-                            hasMore: skip + limit <= publications.length
+                            hasMore: count > skip + limit
                         };
 
                         return res.json({ data });
@@ -66,12 +70,22 @@ export default {
                     default: throw new Error('Invalid account type');
                 }
 
+                // TODO: Get limit and sort from the client
+                const skip = 0; 
+                const limit = 10;
+                const sort = 'createdAt';
+                const populate = ['publisher'];
+
                 return publicationService.create(type, publisherId, feedId, content)
-                    .then((publicationsUpdated) => {
+                    .then(() => {
+                        return publicationService.getList(feedId, sort, skip, limit, populate);
+                    })
+                    .then(([publications, count]) => {
                         broadcastToRoom(feedId, id, 'update');
+
                         const data = {
-                            list: publicationsUpdated,
-                            hasMore: true
+                            list: publications,
+                            hasMore: count > skip + limit
                         };
 
                         return res.json({ data });

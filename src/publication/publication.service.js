@@ -15,12 +15,15 @@ export default {
         const limitNumeric = parseInt(limit);
         const skipNumeric = parseInt(skip);
 
-        return Publication
-            .find({ feed: feedId})
-            .populate(projection)
-            .sort(`-${sort}`)
-            .skip(skipNumeric || defaultPublicationsSkip)
-            .limit(limitNumeric || defaultPublicationsLimit);
+        return Promise.all([
+            Publication
+                .find({ feed: feedId })
+                .populate(projection)
+                .sort(`-${sort}`)
+                .skip(skipNumeric || defaultPublicationsSkip)
+                .limit(limitNumeric || defaultPublicationsLimit),
+            Publication.countDocuments()
+        ])
     },
     /**
      * Create new publication
@@ -37,11 +40,6 @@ export default {
             content
         });
 
-        return publication.save()
-            .then(() => {
-                // TODO: Think about, getting list with start of createdPost and limit 10 i.e
-                // the newly created post should be the 1st one (latest)
-                return this.getList(feed, 'createdAt', 0, 10, ['publisher']);
-            });
+        return publication.save();
     }
 };
