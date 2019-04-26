@@ -1,19 +1,26 @@
 import Publication from './publication.model';
 import { broadcastToRoom } from '../socket';
 
+const defaultPublicationsLimit = 10;
+const defaultPublicationsSkip = 0;
+
 export default {
     /**
      * Get publications by given sort criteria and skip/limit
      * @name getList
-     * @param {Number} skip 
-     * @param {Number} limit 
+     * @param {Number} skip default = 0
+     * @param {Number} limit default = 10
      */
-    getList(feedId, sort = 'createdAt', skip = 0, limit = 10, projection = []) {
+    getList(feedId, sort = 'createdAt', skip = defaultPublicationsSkip, limit = defaultPublicationsLimit, projection = []) {
+        const limitNumeric = parseInt(limit);
+        const skipNumeric = parseInt(skip);
+
         return Publication
             .find({ feed: feedId})
             .populate(projection)
             .sort(`-${sort}`)
-            .limit(limit);
+            .skip(skipNumeric || defaultPublicationsSkip)
+            .limit(limitNumeric || defaultPublicationsLimit);
     },
     /**
      * Create new publication

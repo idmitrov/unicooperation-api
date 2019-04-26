@@ -5,6 +5,7 @@ import { broadcastToRoom } from '../socket';
 export default {
     list(req, res, next) {
         const { account } = req;
+        const { sort, skip, limit } = req.query;
 
         switch (account.type) {
             case accountType.student: {
@@ -12,11 +13,17 @@ export default {
                     .then((accountWithProfile) => {
                         // TODO: Get params from releaseEvents.query
                         const accountProfile = accountWithProfile.profileId;
-
-                        return publicationService.getList(accountProfile.universityId, 'createdAt', 0, 10, ['publisher']);
+                        const populate = ['publisher'];
+                        
+                        return publicationService.getList(accountProfile.universityId, sort, skip, limit, populate);
                     })
                     .then((publications) => {
-                        return res.json({ data: publications });
+                        const data = {
+                            list: publications,
+                            hasMore: skip + limit <= publications.length
+                        }
+
+                        return res.json({ data });
                     })
                     .catch((error) => next({ message: error.errmsg || error }));
                 break;
