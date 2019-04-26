@@ -11,7 +11,6 @@ export default {
             case accountType.student: {
                 req.account.getProfile()
                     .then((accountWithProfile) => {
-                        // TODO: Get params from releaseEvents.query
                         const accountProfile = accountWithProfile.profileId;
                         const populate = ['publisher'];
                         
@@ -21,7 +20,7 @@ export default {
                         const data = {
                             list: publications,
                             hasMore: skip + limit <= publications.length
-                        }
+                        };
 
                         return res.json({ data });
                     })
@@ -29,10 +28,16 @@ export default {
                 break;
             }
             case accountType.university: {
-                // TODO: Get params from releaseEvents.query
-                publicationService.getList(account.profileId, 'createdAt', 0, 10, ['publisher'])
+                const populate = ['publisher'];
+
+                publicationService.getList(account.profileId, sort, skip, limit, populate)
                     .then((publications) => {
-                        return res.json({ data: publications });
+                        const data = {
+                            list: publications,
+                            hasMore: skip + limit <= publications.length
+                        };
+
+                        return res.json({ data });
                     })
                     .catch((error) => next({ message: error.errmsg || error }));
                 break;
@@ -64,8 +69,12 @@ export default {
                 return publicationService.create(type, publisherId, feedId, content)
                     .then((publicationsUpdated) => {
                         broadcastToRoom(feedId, id, 'update');
+                        const data = {
+                            list: publicationsUpdated,
+                            hasMore: true
+                        };
 
-                        return res.json({ data: publicationsUpdated });
+                        return res.json({ data });
                     })
                     .catch((error) => next({ message: error.errmsg || error }));
             })
