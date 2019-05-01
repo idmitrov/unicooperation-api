@@ -16,7 +16,12 @@ export default {
      */
     connect(host, port, name, options = {}) {
         const connectionString = `mongodb://${host}:${port}/${name}`;
-        const dbDefaults = { useNewUrlParser: true, useCreateIndex: true };
+
+        const dbDefaults = {
+            useNewUrlParser: true,
+            useCreateIndex: true,
+            useFindAndModify: false
+        };
 
         return dbDriver.connect(connectionString, Object.assign({}, dbDefaults, options));
     }
