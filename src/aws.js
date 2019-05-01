@@ -17,8 +17,7 @@ export const uploadS3 = multer({
         acl: 'public-read',
         bucket: Config.aws.s3.upload.bucket,
         key: function (req, file, cb) {
-            console.log(file);
-            cb(null, file.originalname); //use Date.now() for unique file keys
+            cb(null, `${Date.now()}-${file.originalname}`);
         }
     })
 });
