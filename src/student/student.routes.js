@@ -9,6 +9,6 @@ const router = new Router();
 router
     .post('/', [auth()], studentController.create)
     .get('/me', [auth()], studentController.me)
-    .put('/me', [auth(), uploadS3.any()], studentController.updateMyProfile)
+    .put('/me', [auth(), uploadS3('profile').any()], studentController.updateMyProfile)
 
 export default router;

@@ -11,13 +11,17 @@ export const configureAWS = () => {
     });
 }
 
-export const uploadS3 = multer({
-    storage: multerS3({
-        s3: new aws.S3(),
-        acl: 'public-read',
-        bucket: Config.aws.s3.upload.bucket,
-        key: function (req, file, cb) {
-            cb(null, `${Date.now()}-${file.originalname}`);
-        }
-    })
-});
+export const uploadS3 = (namespace = 'global') => {
+    return multer({
+        storage: multerS3({
+            s3: new aws.S3(),
+            acl: 'public-read',
+            bucket: Config.aws.s3.upload.bucket,
+            key: function (req, file, cb) {
+                const path =`${namespace}/${req.account.id}/${Date.now()}-${file.originalname}`;
+
+                cb(null, path);
+            }
+        })
+    });
+}
