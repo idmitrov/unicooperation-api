@@ -2,8 +2,19 @@ import studentService from './student.service';
 
 export default {
     updateMyProfile(req, res, next) {
-        // console.log(req.file);
-        return res.json({});
+        let update = req.body;
+
+        if (req.files && req.files.length) {
+            update = {
+                avatar: req.files[0].location
+            };
+        }
+
+        studentService.findByIdAndUpdate(req.account.profileId, update)
+            .then((updatedStudent) => {
+                return res.json({ data: updatedStudent });
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
     },
     me(req, res, next) {
         studentService.findById(req.account.profileId)
@@ -20,7 +31,7 @@ export default {
                 req.account.setProfileId(createdStudent.id)
                     .then((savedAccount) => {
                         const data = { account: savedAccount };
-                        
+
                         return res.json({ data });
                     });
             })
