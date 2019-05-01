@@ -24,5 +24,14 @@ export default {
         const newStudent = new Student({ firstName, facultyId, universityId, accountId });
 
         return newStudent.save();
+    },
+    /**
+     * Find a given Student by id and update it data by provided update
+     * @name findByIdAndUpdate
+     * @param {String} id 
+     * @param {String} update 
+     */
+    findByIdAndUpdate(id, update) {
+        return Student.findOneAndUpdate(id, update, { new: true });
     }
 }
