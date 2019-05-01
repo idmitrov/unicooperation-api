@@ -1,7 +1,9 @@
 import http from 'http';
 import express, { Router } from 'express';
 import cors from 'cors';
+
 import io from 'socket.io';
+
 import { urlencoded, json } from 'body-parser';
 
 import Passport from 'passport';
@@ -9,6 +11,7 @@ import { Strategy } from 'passport-local';
 import jwt from 'jsonwebtoken';
 
 import Config from './config';
+import { configureAWS } from './aws';
 
 import Account from './account/account.model';
 
@@ -112,6 +115,7 @@ export default {
     start(host, port) {
         const api = express();
 
+        configureAWS(Config.aws);
         configureAuth();
         configureMiddlewares(api);
         configureRoutes(api);

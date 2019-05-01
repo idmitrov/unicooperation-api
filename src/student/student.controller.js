@@ -1,6 +1,10 @@
 import studentService from './student.service';
 
 export default {
+    updateMyProfile(req, res, next) {
+        // console.log(req.file);
+        return res.json({});
+    },
     me(req, res, next) {
         studentService.findById(req.account.profileId)
             .then((foundProfile) => {

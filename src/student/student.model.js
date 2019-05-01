@@ -15,6 +15,14 @@ const studentSchema = new dbSchema({
         required: true
     },
     /**
+     * @name avatar
+     * @type String
+     */
+    avatar: {
+        type: String,
+        default: null
+    },
+    /**
      * @name facultyId
      * @type String
      */

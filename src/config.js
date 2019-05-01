@@ -29,5 +29,15 @@ export default {
         service: cfg.SMTP_SERVICE,
         user: cfg.SMTP_USER,
         password: cfg.SMTP_PASSWORD
+    },
+    aws: {
+        secret: cfg.AWS_SECRET,
+        key: cfg.AWS_KEY,
+        region: cfg.AWS_REGION,
+        s3: {
+            upload: {
+                bucket: cfg.AWS_S3_UPLOAD_BUCKET
+            }
+        }
     }
 }
