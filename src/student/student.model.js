@@ -31,6 +31,14 @@ const studentSchema = new dbSchema({
         required: true
     },
     /**
+     * @name facebookUrl
+     * @type String 
+     */
+    facebookUrl: {
+        type: String,
+        default: null
+    },
+    /**
      * @name firstName
      * @type String
      */
@@ -79,6 +87,14 @@ const studentSchema = new dbSchema({
         default: null
     },
     /**
+     * @name linkedinUrl
+     * @type String 
+     */
+    linkedinUrl: {
+        type: String,
+        default: null
+    },
+    /**
      * @name universityId
      * @type String
      */
@@ -86,21 +102,6 @@ const studentSchema = new dbSchema({
         type: dbSchema.Types.ObjectId,
         ref: 'University',
         required: true
-    },
-    facebookProfileUrl: {
-        type: String,
-        default: null,
-        unique: true
-    },
-    linkedInProfileUrl: {
-        type: String,
-        default: null,
-        unique: true
-    },
-    instagramProfileUrl: {
-        type: String,
-        default: null,
-        unique: true
     }
 }, studentSchemaOptions);
 
