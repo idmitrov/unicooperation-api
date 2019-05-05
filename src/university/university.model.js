@@ -23,6 +23,30 @@ const universitySchema = new dbSchema({
         default: null
     },
     /**
+     * @name facebookUrl
+     * @type String
+     */
+    facebookUrl: {
+        type: String,
+        default: null
+    },
+    /**
+     * @name instagramUrl
+     * @type String
+     */
+    instagramUrl: {
+        type: String,
+        default: null
+    },
+    /**
+     * @name linkedinUrl
+     * @type String
+     */
+    linkedinUrl: {
+        type: String,
+        default: null
+    },
+    /**
      * @name mobileNumber
      * @type String
      */
@@ -59,7 +83,15 @@ const universitySchema = new dbSchema({
      */
     students: [
         { type: dbSchema.Types.ObjectId, ref: 'Student' }
-    ]
+    ],
+    /**
+     * @name summary
+     * @type String
+     */
+    summary: {
+        type: String,
+        default: null
+    }
 }, universitySchemaOptions);
 
 export default dbModel('University', universitySchema);
