@@ -15,6 +15,14 @@ const universitySchema = new dbSchema({
         required: true
     },
     /**
+     * @name avatar
+     * @type String
+     */
+    avatar: {
+        type: String,
+        default: null
+    },
+    /**
      * @name mobileNumber
      * @type String
      */

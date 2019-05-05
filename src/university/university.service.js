@@ -13,6 +13,13 @@ export default {
             .select(projection);
     },
     /**
+     * Find a given University by id and update it data by provided update
+     *  @name findByIdAndUpdate
+     */
+    findByIdAndUpdate(id, update) {
+        return University.findOneAndUpdate(id, update, { new: true });
+    },
+    /**
      * Filter universities by name which starts with a given query
      * @name filter
      * @param {String} name

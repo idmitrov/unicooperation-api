@@ -11,6 +11,23 @@ export default {
             .catch((error) => next({ message: error.errmsg || error }));
 
     },
+    updateMyProfile(req, res, next) {
+        let update = req.body;
+
+        if (req.files && req.files.length) {
+            update = {
+                avatar: req.files[0].location
+            };
+        }
+
+        return universityService.findByIdAndUpdate(req.account.profileId, update)
+            .then((updatedUniversity) => {
+                return res.json({
+                    data: updatedUniversity
+                });
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
+    },
     findByName(req, res) {
         const { name } = req.params;
 
