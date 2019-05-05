@@ -10,6 +10,21 @@ export default {
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
+    updateMyProfile(req, res, next) {
+        let update = req.body;
+
+        if (req.files && req.files.length) {
+            update = {
+                avatar: req.files[0].location
+            };
+        }
+
+        partnerService.findByIdAndUpdate(req.account.profileId, update)
+            .then((updatedPartner) => {
+                return res.json({ data: updatedPartner });
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
+    },
     create(req, res, next) {
         const { name, countryCode } = req.body;
 
