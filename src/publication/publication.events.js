@@ -24,7 +24,7 @@ export default (client) => {
                 joinRoom(account.profileId, client);
                 break;
             }
-            default: throw new Error('Invalid account type tried to join');
+            default: console.error('Invalid account type tried to join');
         }
     });
 }
