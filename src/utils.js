@@ -1,4 +1,4 @@
-import { genSalt, hash, compare } from 'bcrypt';
+import { genSalt, hash, compare } from 'bcryptjs';
 import { createTransport } from 'nodemailer';
 
 import Config from './config';
