@@ -8,14 +8,6 @@ const accountSchemaOptions = {
 
 const accountSchema = new dbSchema({
     /**
-     * @name avatar
-     * @type String
-     */
-    avatar: {
-        type: String,
-        default: null
-    },
-    /**
      * @name confirmed
      * @type Boolean
      */
