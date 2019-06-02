@@ -27,7 +27,7 @@ export const authSocket = (socket, next) => {
     }
 }
 
-export const auth = (role) => (req, res, next) => {
+export const auth = (roles) => (req, res, next) => {
     if (!req.headers.authorization) {
         return res
             .status(401)
@@ -56,8 +56,8 @@ export const auth = (role) => (req, res, next) => {
                         .json({ error: 'Unauthorized' });
                 }
 
-                if (role) {
-                    if (foundAccount.type === role) {
+                if (roles && Array.isArray(roles) && roles.length) {
+                    if (!roles.includes(foundAccount.type)) {
                         return res
                             .status(401)
                             .json({ error: 'Unauthorized' });
