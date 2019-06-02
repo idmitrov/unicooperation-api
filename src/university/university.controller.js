@@ -31,7 +31,7 @@ export default {
     findByName(req, res) {
         const { name } = req.params;
 
-        return universityService.findByName(name)
+        return universityService.findByName(name, ['name', 'rating', 'avatar'])
             .then((foundUniversities) => {
                 return res.json({
                     data: foundUniversities
@@ -47,7 +47,7 @@ export default {
             });
         }
 
-        return universityService.filterByName(name, skip, take)
+        return universityService.filterByName(name, skip, take, ['name', 'rating', 'avatar'])
             .then((foundUniversities) => {
                 return res.json({ data: foundUniversities });
             });

@@ -26,11 +26,11 @@ export default {
      * @param {Number} skip
      * @param {Number} limit
      */
-    filterByName(name, skip = 0, limit = 10) {
+    filterByName(name, skip = 0, limit = 10, projection = []) {
         const regex = new RegExp(`^${name}`, 'i');
 
         return University.find({ name: { $regex: regex } })
-            .select(['name', 'rating'])
+            .select(projection)
             .skip(skip || 0)
             .limit(limit || 10);
     },
@@ -39,9 +39,9 @@ export default {
      * @name findByName
      * @param {String} name 
      */
-    findByName(name) {
+    findByName(name, projection = []) {
         return University.findOne({ name })
-            .select(['name', 'rating', 'mobileNumber']);
+            .select(projection);
     },
     /**
      * Create new university
