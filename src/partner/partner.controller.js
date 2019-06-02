@@ -47,7 +47,7 @@ export default {
                 data: []
             });
         }
-        console.log(name)
+
         return partnerService.filterByName(name, skip, take, ['name', 'rating', 'avatar'])
             .then((foundUniversities) => {
                 return res.json({ data: foundUniversities });
