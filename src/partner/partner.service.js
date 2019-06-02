@@ -21,6 +21,21 @@ export default {
         return Partner.findOneAndUpdate(id, update, { new: true });
     },
     /**
+     * Filter partners by name which starts with a given query
+     * @name filter
+     * @param {String} name
+     * @param {Number} skip
+     * @param {Number} limit
+     */
+    filterByName(name, skip = 0, limit = 10, projection = []) {
+        const regex = new RegExp(`^${name}`, 'i');
+
+        return Partner.find({ name: { $regex: regex } })
+            .select(projection)
+            .skip(skip || 0)
+            .limit(limit || 10);
+    },
+    /**
      * Create a new Partner
      * @name create
      * @param {String} name 

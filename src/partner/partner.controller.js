@@ -38,5 +38,19 @@ export default {
                     });
             })
             .catch((error) => next(error.errmsg || error));
-    }
+    },
+    filterByName(req, res) {
+        const { name, skip, take } = req.query;
+
+        if (!name) {
+            return res.json({
+                data: []
+            });
+        }
+        console.log(name)
+        return partnerService.filterByName(name, skip, take, ['name', 'rating', 'avatar'])
+            .then((foundUniversities) => {
+                return res.json({ data: foundUniversities });
+            });
+    },
 };
