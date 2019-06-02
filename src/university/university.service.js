@@ -29,10 +29,13 @@ export default {
     filterByName(name, skip = 0, limit = 10, projection = []) {
         const regex = new RegExp(`^${name}`, 'i');
 
-        return University.find({ name: { $regex: regex } })
-            .select(projection)
-            .skip(skip || 0)
-            .limit(limit || 10);
+        return Promise.all([
+            University.find({ name: { $regex: regex } })
+                .select(projection)
+                .skip(skip || 0)
+                .limit(limit || 10),
+            University.find({ name: { $regex: regex } }).countDocuments()
+        ])
     },
     /**
      * Find a given university by name

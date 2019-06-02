@@ -41,7 +41,6 @@ export default {
     },
     filterByName(req, res) {
         const { name, skip, take } = req.query;
-
         if (!name) {
             return res.json({
                 data: {
@@ -52,10 +51,10 @@ export default {
         }
 
         return partnerService.filterByName(name, skip, take, ['name', 'rating', 'avatar'])
-            .then((foundUniversities) => {
+            .then(([foundPartners, foundPartnersTotal]) => {
                 const data = {
-                    list: foundUniversities,
-                    total: foundUniversities.length
+                    list: foundPartners,
+                    total: foundPartnersTotal
                 };
 
                 return res.json({ data });

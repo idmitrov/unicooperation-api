@@ -51,10 +51,11 @@ export default {
         }
 
         return universityService.filterByName(name, skip, take, ['name', 'rating', 'avatar'])
-            .then((foundUniversities) => {
+            .then(([foundUniversities, foundUniversitiesTotal]) => {
+                console.log(foundUniversities)
                 const data = {
                     list: foundUniversities,
-                    total: foundUniversities.length
+                    total: foundUniversitiesTotal
                 };
 
                 return res.json({ data });

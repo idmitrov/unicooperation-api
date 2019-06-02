@@ -30,10 +30,13 @@ export default {
     filterByName(name, skip = 0, limit = 10, projection = []) {
         const regex = new RegExp(`^${name}`, 'i');
 
-        return Partner.find({ name: { $regex: regex } })
-            .select(projection)
-            .skip(skip || 0)
-            .limit(limit || 10);
+        return Promise.all([
+            Partner.find({ name: { $regex: regex } })
+                .select(projection)
+                .skip(skip || 0)
+                .limit(limit || 10),
+            Partner.find({ name: { $regex: regex } }).countDocuments()
+        ])
     },
     /**
      * Create a new Partner
