@@ -44,13 +44,21 @@ export default {
 
         if (!name) {
             return res.json({
-                data: []
+                data: {
+                    list: [],
+                    total: 0
+                }
             });
         }
 
         return partnerService.filterByName(name, skip, take, ['name', 'rating', 'avatar'])
             .then((foundUniversities) => {
-                return res.json({ data: foundUniversities });
+                const data = {
+                    list: foundUniversities,
+                    total: foundUniversities.length
+                };
+
+                return res.json({ data });
             });
     },
 };
