@@ -11,6 +11,6 @@ router
     .get('/me', [auth()], universityController.me)
     .put('/me', [auth(), uploadS3('profile').any()], universityController.updateMyProfile)
     .get('/findByName/:name', [auth()], universityController.findByName)
-    .get('/filter',[auth()], universityController.filterByName)
+    .get('/filter',[auth(['Student', 'Partner'])], universityController.filterByName)
 
 export default router;

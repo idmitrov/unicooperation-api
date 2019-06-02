@@ -31,8 +31,8 @@ export default {
 
         return University.find({ name: { $regex: regex } })
             .select(['name', 'rating'])
-            .skip(skip)
-            .limit(limit);
+            .skip(skip || 0)
+            .limit(limit || 10);
     },
     /**
      * Find a given university by name
