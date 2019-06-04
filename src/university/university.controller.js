@@ -39,7 +39,7 @@ export default {
             });
     },
     filterByName(req, res) {
-        const { name, skip, take } = req.query;
+        const { name, page, limit } = req.query;
 
         if (!name) {
             return res.json({
@@ -50,9 +50,8 @@ export default {
             });
         }
 
-        return universityService.filterByName(name, skip, take, ['name', 'rating', 'avatar'])
+        return universityService.filterByName(name, page, limit, ['name', 'rating', 'avatar'])
             .then(([foundUniversities, foundUniversitiesTotal]) => {
-                console.log(foundUniversities)
                 const data = {
                     list: foundUniversities,
                     total: foundUniversitiesTotal
