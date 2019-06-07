@@ -29,6 +29,9 @@ export default {
      */
     filterByName(name, skip = 0, limit = 10, projection = []) {
         const regex = new RegExp(`^${name}`, 'i');
+        
+        skip = Number(skip) || 0;
+        limit = Number(limit) || 10;
 
         return Promise.all([
             Partner.find({ name: { $regex: regex } })
