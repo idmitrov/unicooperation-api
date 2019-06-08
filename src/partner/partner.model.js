@@ -6,7 +6,7 @@ const partnerSchemaOptions = {
 
 const partnerSchema = new dbSchema({
     /**
-     * @name accountId
+     * @name account
      * @type String
      */
     account: {

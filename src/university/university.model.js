@@ -6,7 +6,7 @@ const universitySchemaOptions = {
 
 const universitySchema = new dbSchema({
     /**
-     * @name accountId
+     * @name account
      * @type String
      */
     account: {
