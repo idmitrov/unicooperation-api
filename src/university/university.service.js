@@ -34,6 +34,7 @@ export default {
 
         return Promise.all([
             University.find({ name: { $regex: regex } })
+                .populate('account')
                 .select(projection)
                 .skip(skip * limit)
                 .limit(limit),
@@ -53,9 +54,10 @@ export default {
      * Create new university
      * @name create
      * @param {Object} universityData
+     * @param {String} account
      */
-    create(name, countryCode, accountId) {
-        const newUniversity = new University({ name, countryCode, accountId });
+    create(name, countryCode, account) {
+        const newUniversity = new University({ name, countryCode, account });
 
         return newUniversity.save();
     }
