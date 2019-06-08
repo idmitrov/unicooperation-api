@@ -8,9 +8,10 @@ const router = new Router();
 
 router
     .post('/', [auth()], universityController.create)
+    .get('/preview/:name', [auth()], universityController.preview)
     .get('/me', [auth()], universityController.me)
     .put('/me', [auth(), uploadS3('profile').any()], universityController.updateMyProfile)
     .get('/findByName/:name', [auth()], universityController.findByName)
-    .get('/filter',[auth(['Student', 'Partner'])], universityController.filterByName)
+    .get('/filter', [auth(['Student', 'Partner'])], universityController.filterByName)
 
 export default router;

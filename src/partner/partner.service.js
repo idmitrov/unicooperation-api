@@ -1,6 +1,10 @@
 import Partner from './partner.model';
 
 export default {
+    findByName(name, projection = []) {
+        return Partner.findOne({ name })
+            .select(projection);
+    },
     /**
      * Find a given Partner by id
      * @name findById

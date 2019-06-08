@@ -1,6 +1,15 @@
 import universityService from './university.service';
 
 export default {
+    preview(req, res, next) {
+        return universityService.findByName(req.params.name)
+            .then((foundUniversity) => {
+                return res.json({
+                    data: foundUniversity
+                });
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
+    },
     me(req, res, next) {
         return universityService.findById(req.account.profileId)
             .then((foundUniversity) => {

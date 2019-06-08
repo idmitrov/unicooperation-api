@@ -1,6 +1,15 @@
 import partnerService from './partner.service';
 
 export default {
+    preview(req, res, next) {
+        return partnerService.findByName(req.params.name)
+            .then((foundPartner) => {
+                return res.json({
+                    data: foundPartner
+                });
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
+    },
     getMyProfile(req, res, next) {
         return partnerService.findById(req.account.profileId)
             .then((foundPartner) => {
