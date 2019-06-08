@@ -6,10 +6,10 @@ const studentSchemaOptions = {
 
 const studentSchema = new dbSchema({
     /**
-     * @name accountId
+     * @name account
      * @type Account
      */
-    accountId: {
+    account: {
         type: dbSchema.Types.ObjectId,
         ref: 'Account',
         required: true

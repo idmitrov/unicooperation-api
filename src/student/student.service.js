@@ -18,10 +18,10 @@ export default {
      * @param {String} firstName 
      * @param {String} facultyId 
      * @param {String} universityId 
-     * @param {String} accountId 
+     * @param {String} account 
      */
-    create(firstName, facultyId, universityId, accountId) {        
-        const newStudent = new Student({ firstName, facultyId, universityId, accountId });
+    create(firstName, facultyId, universityId, account) {        
+        const newStudent = new Student({ firstName, facultyId, universityId, account });
 
         return newStudent.save();
     },
