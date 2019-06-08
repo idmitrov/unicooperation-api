@@ -9,7 +9,7 @@ const partnerSchema = new dbSchema({
      * @name accountId
      * @type String
      */
-    accountId: {
+    account: {
         type: dbSchema.Types.ObjectId,
         ref: 'Account',
         required: true

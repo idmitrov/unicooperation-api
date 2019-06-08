@@ -35,6 +35,7 @@ export default {
 
         return Promise.all([
             Partner.find({ name: { $regex: regex } })
+                .populate('account', { '_id': 0, 'type': 1 })
                 .select(projection)
                 .skip(skip || 0)
                 .limit(limit || 10),
@@ -46,10 +47,10 @@ export default {
      * @name create
      * @param {String} name 
      * @param {String} countryCode 
-     * @param {String} accountId 
+     * @param {String} account 
      */
-    create(name, countryCode, accountId) {        
-        const newPartner = new Partner({name, countryCode, accountId});
+    create(name, countryCode, account) {        
+        const newPartner = new Partner({name, countryCode, account});
 
         return newPartner.save();
     }
