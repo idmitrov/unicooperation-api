@@ -12,7 +12,8 @@ router
     .get('/preview/:name', [auth(accountType.partner)], universityController.preview)
     .get('/me', [auth(accountType.university)], universityController.me)
     .put('/me', [auth(accountType.university), uploadS3('profile').any()], universityController.updateMyProfile)
-    .get('/findByName/:name', [auth(accountType.student)], universityController.findByName)
+    // AS SOON AS THE SYSTEM STABILITY CONFIRMED WILL BE DELETED
+    // .get('/findByName/:name', [auth(accountType.student)], universityController.findByName)
     .get('/filter', [auth(['Student', 'Partner'])], universityController.filterByName)
 
 export default router;

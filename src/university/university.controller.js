@@ -37,16 +37,17 @@ export default {
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
-    findByName(req, res) {
-        const { name } = req.params;
+    // AS SOON AS THE SYSTEM STABILITY CONFIRMED WILL BE DELETED
+    // findByName(req, res) {
+    //     const { name } = req.params;
 
-        return universityService.findByName(name, ['name', 'rating', 'avatar'])
-            .then((foundUniversities) => {
-                return res.json({
-                    data: foundUniversities
-                });
-            });
-    },
+    //     return universityService.findByName(name, ['name', 'rating', 'avatar'])
+    //         .then((foundUniversities) => {
+    //             return res.json({
+    //                 data: foundUniversities
+    //             });
+    //         });
+    // },
     filterByName(req, res) {
         const { name, skip, limit } = req.query;
 
