@@ -23,20 +23,21 @@ export default {
      * Filter universities by name which starts with a given query
      * @name filter
      * @param {String} name
-     * @param {Number} skip
+     * @param {Number} page
      * @param {Number} limit
      */
-    filterByName(name, skip = 0, limit = 10, projection = []) {
+    filterByName(name, page = 0, limit = 10, projection = []) {
         const regex = new RegExp(`^${name}`, 'i');
 
-        skip = Number(skip) || 0;
+        page = Number(page) || 0;
         limit = Number(limit) || 10;
+        
 
         return Promise.all([
             University.find({ name: { $regex: regex } })
                 .populate('account')
                 .select(projection)
-                .skip(skip * limit)
+                .skip(page > 1 ? (page - 1) * limit : 0)
                 .limit(limit),
             University.find({ name: { $regex: regex } }).countDocuments()
         ])
