@@ -79,8 +79,9 @@ accountSchema.methods.setProfileId = function(profileId) {
     return this.save();
 }
 
+// TODO: Refactor to returns only the profile without the account
 accountSchema.methods.getProfile = function() {
-    return Account.populate(this, 'profileId')
+    return Account.populate(this, 'profileId');
 }
 
 accountSchema.pre('save', function(next) {

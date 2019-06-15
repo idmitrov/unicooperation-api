@@ -15,5 +15,6 @@ router
     // AS SOON AS THE SYSTEM STABILITY CONFIRMED WILL BE DELETED
     // .get('/findByName/:name', [auth(accountType.student)], universityController.findByName)
     .get('/filter', [auth(['Student', 'Partner'])], universityController.filterByName)
+    .post('/follow', [auth(accountType.partner)], universityController.follow)
 
 export default router;

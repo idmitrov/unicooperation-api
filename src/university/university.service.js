@@ -1,6 +1,20 @@
 import University from './university.model';
 
 export default {
+    follow(followerId, followingId) {
+        return University
+            .findById(followingId)
+            .select(['-account', '-students'])
+            .then((foundUniversity) => {
+                if (foundUniversity && foundUniversity.partners.indexOf(followerId) === -1) {
+                    foundUniversity.partners.push(followerId);
+
+                    return foundUniversity.save();
+                }
+
+                return null;
+            });
+    },
     /**
      * Find a given university by provided id
      * @name findById

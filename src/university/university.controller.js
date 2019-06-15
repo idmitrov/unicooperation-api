@@ -1,21 +1,52 @@
 import universityService from './university.service';
 
 export default {
+    follow(req, res, next) {
+        const { account, body } = req;
+
+        return universityService.follow(account.profileId, body.followingId)
+            .then((followedUniversityProfile) => {
+                let data = null;
+
+                if (followedUniversityProfile) {
+                    return account.getProfile()
+                        .then((accountWithProfile) => {
+                            const followerProfile = accountWithProfile.profileId;
+                            
+                            followerProfile.universities.push(followedUniversityProfile.id);
+
+                            data = followedUniversityProfile.toObject();
+                            data.isFollowed = followedUniversityProfile.partners.indexOf(followerProfile.id) > -1;
+                            delete data.partners;
+
+                            return res.json({ data });
+                        });
+                }
+
+                return res.json({ data });
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
+    },
     preview(req, res, next) {
-        return universityService.findByName(req.params.name)
+        const { account } = req;
+        const projection = ['-account', '-students'];
+
+        return universityService.findByName(req.params.name, projection)
             .then((foundUniversity) => {
-                return res.json({
-                    data: foundUniversity
-                });
+                const data = foundUniversity.toObject();
+                data.isFollowed = foundUniversity.partners.indexOf(account.profileId) > -1;
+                delete data.partners;
+
+                return res.json({ data });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
     me(req, res, next) {
         return universityService.findById(req.account.profileId)
             .then((foundUniversity) => {
-                return res.json({
-                    data: foundUniversity
-                });
+                const data = foundUniversity;
+                
+                return res.json({ data });
             })
             .catch((error) => next({ message: error.errmsg || error }));
 
@@ -31,9 +62,9 @@ export default {
 
         return universityService.findByIdAndUpdate(req.account.profileId, update)
             .then((updatedUniversity) => {
-                return res.json({
-                    data: updatedUniversity
-                });
+                const data = updatedUniversity;
+
+                return res.json({ data });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
