@@ -1,6 +1,27 @@
 import studentService from './student.service';
 
 export default {
+    match(req, res, next) {
+        const { account } = req;
+
+        return account.getProfile()
+            .then((accountWithProfile) => {
+                const profile = accountWithProfile.profileId;
+
+                const query = Object.assign({}, req.query, {
+                    universities: profile.universities
+                });
+        
+                return studentService.match(query)
+                    .then((foundStudents) => {
+                        const data = foundStudents;
+        
+                        return res.json({ data });
+                    })
+                    .catch((error) => next({ message: error.errmsg || error }));
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
+    },
     updateMyProfile(req, res, next) {
         let update = req.body;
 

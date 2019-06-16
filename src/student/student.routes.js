@@ -11,5 +11,6 @@ router
     .post('/', [auth(accountType.student)], studentController.create)
     .get('/me', [auth(accountType.student)], studentController.me)
     .put('/me', [auth(accountType.student), uploadS3('profile').any()], studentController.updateMyProfile)
+    .get('/match', [auth(accountType.partner)], studentController.match)
 
 export default router;

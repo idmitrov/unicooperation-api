@@ -2,6 +2,32 @@ import Student from './student.model';
 
 export default {
     /**
+     * Matching Students by given criteria like experience, title etc..
+     * @name match
+     * @param {Object} criteria 
+     */
+    match(criteria) {
+        const allowedSimpleCriterias = [
+            'title',
+            'experience',
+            'verified'
+        ];
+        
+        const query = {};
+
+        if (criteria.universities) {
+            query.universityId = { $in: criteria.universities };
+        }
+
+        allowedSimpleCriterias.forEach((key) => {
+            if (criteria.hasOwnProperty(key)) {
+                query[key] = criteria[key];
+            }
+        });
+
+        return Student.find(query);
+    },
+    /**
      * Find a student by id
      * @name findById
      * @param {String} id 
