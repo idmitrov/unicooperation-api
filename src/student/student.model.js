@@ -23,6 +23,14 @@ const studentSchema = new dbSchema({
         default: null
     },
     /**
+     * @name experience
+     * @type Number
+     */
+    experience: {
+        type: Number,
+        default: 0
+    },
+    /**
      * @name facultyId
      * @type String
      */
@@ -85,6 +93,14 @@ const studentSchema = new dbSchema({
     summary: {
         type: String,
         default: null
+    },
+    /**
+     * @name title
+     * @type String
+     */
+    title: {
+        type: String,
+        default: ''
     },
     /**
      * @name linkedinUrl
