@@ -14,7 +14,8 @@ export default {
                             const followerProfile = accountWithProfile.profileId;
                             
                             followerProfile.universities.push(followedUniversityProfile.id);
-
+                            followerProfile.save();
+                            
                             data = followedUniversityProfile.toObject();
                             data.isFollowed = followedUniversityProfile.partners.indexOf(followerProfile.id) > -1;
                             delete data.partners;
