@@ -7,21 +7,21 @@ export default {
      * @param {Object} criteria 
      */
     match(criteria) {
-        const allowedSimpleCriterias = [
+        const query = {};
+        const allowedCriterias = [
             'title',
             'experience',
-            'verified'
+            'verified',
+            'universityId'
         ];
         
-        const query = {};
-
-        if (criteria.universities) {
-            query.universityId = { $in: criteria.universities };
-        }
-
-        allowedSimpleCriterias.forEach((key) => {
+        allowedCriterias.forEach((key) => {
             if (criteria.hasOwnProperty(key)) {
-                query[key] = criteria[key];
+                if (Array.isArray(criteria[key])) {
+                    query[key] = { $in: criteria[key] };
+                } else {
+                    query[key] = criteria[key];
+                }
             }
         });
 

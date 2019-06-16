@@ -9,7 +9,7 @@ export default {
                 const profile = accountWithProfile.profileId;
 
                 const query = Object.assign({}, req.query, {
-                    universities: profile.universities
+                    universityId: profile.universities
                 });
         
                 return studentService.match(query)
