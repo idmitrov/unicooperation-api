@@ -6,7 +6,8 @@
   "author": "Dimitar <mailto.dimitrov@gmail.com>",
   "scripts": {
     "prestart": "yarn",
-    "start": "NODE_ENV=dev nodemon"
+    "dev": "NODE_ENV=dev nodemon",
+    "start": "NODE_ENV=prod node index.js"
   },
   "dependencies": {
     "aws-sdk": "^2.446.0",

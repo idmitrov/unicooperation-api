@@ -1,4 +1,5 @@
 import http from 'http';
+import https from 'https';
 import express, { Router } from 'express';
 import cors from 'cors';
 
@@ -121,11 +122,16 @@ export default {
         configureRoutes(api);
         handleErrors(api);
 
-        const server = http.createServer(api)
-        const socketIO = io(server, { origins: Config.api.origins });
-        
-        server.listen(port, host, () => {            
-            configureSockets(socketIO);
+        let server = null;
+        if (process.env.NODE_ENV === 'prod') {
+            server = http.createServer(api);
+        } else {
+            server = https.createServer(api);
+        }
+
+        const sokcetIO = io(server,  { origins: Config.api.origins });
+        server.listen(port, host, () => {
+            configureSockets(sokcetIO);
         });
     }
 };
