@@ -124,9 +124,9 @@ export default {
 
         let server = null;
         if (process.env.NODE_ENV === 'prod') {
-            server = http.createServer(api);
-        } else {
             server = https.createServer({}, api);
+        } else {
+            server = http.createServer(api);
         }
 
         const sokcetIO = io(server,  { origins: Config.api.origins });
