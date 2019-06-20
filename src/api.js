@@ -131,8 +131,6 @@ export default {
 
         const sokcetIO = io(server,  { origins: Config.api.origins });
         server.listen(port, host, () => {
-            console.log(`listening on port ${port}`);
-            
             configureSockets(sokcetIO);
         });
     }
