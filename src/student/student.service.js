@@ -10,7 +10,7 @@ export default {
      * @param {Array} projection
      */
     match(criteria, page = 1, limit = 10, projection = []) {
-        const query = {};
+        const query = { available: true };
         const optionalCriterias = ['experience', 'verified', 'universityId'];
         
         page = Number(page) || 0;
