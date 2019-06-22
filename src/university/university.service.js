@@ -46,7 +46,6 @@ export default {
         page = Number(page) || 0;
         limit = Number(limit) || 10;
         
-
         return Promise.all([
             University.find({ name: { $regex: regex } })
                 .populate('account')
@@ -54,7 +53,7 @@ export default {
                 .skip(page > 1 ? (page - 1) * limit : 0)
                 .limit(limit),
             University.find({ name: { $regex: regex } }).countDocuments()
-        ])
+        ]);
     },
     /**
      * Find a given university by name
