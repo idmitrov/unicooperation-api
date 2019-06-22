@@ -8,19 +8,24 @@ export default {
      */
     match(criteria) {
         const query = {};
-        const allowedCriterias = [
-            'title',
-            'experience',
-            'verified',
-            'universityId'
-        ];
+        const optionalCriterias = ['experience', 'verified', 'universityId'];
         
-        allowedCriterias.forEach((key) => {
-            if (criteria.hasOwnProperty(key)) {
-                if (Array.isArray(criteria[key])) {
-                    query[key] = { $in: criteria[key] };
+        if (criteria.title) {
+            const regex = new RegExp(`^${criteria.title}`, 'i');
+            
+            query.title = { $regex: regex };
+        }
+
+        optionalCriterias.forEach((key) => {
+            const isCriteriaPropertyDefined = criteria.hasOwnProperty(key);
+
+            if (isCriteriaPropertyDefined) {
+                const criteriaValue = criteria[key];
+
+                if (Array.isArray(criteriaValue)) {
+                    query[key] = { $in: criteriaValue };
                 } else {
-                    query[key] = criteria[key];
+                    query[key] = criteriaValue;
                 }
             }
         });

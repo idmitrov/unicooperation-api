@@ -1,13 +1,19 @@
 import studentService from './student.service';
 
 export default {
-    match(req, res, next) {
-        const { account } = req;
+    match(req, res, next) {        
+        if (!Object.keys(req.query).length) {
+            return res.json({
+                data: []
+            });
+        }
 
+        const { account } = req;
+        
         return account.getProfile()
             .then((accountWithProfile) => {
                 const profile = accountWithProfile.profileId;
-
+                
                 const query = Object.assign({}, req.query, {
                     universityId: profile.universities
                 });
