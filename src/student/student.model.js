@@ -23,6 +23,14 @@ const studentSchema = new dbSchema({
         default: null
     },
     /**
+     * @name available
+     * @type Boolean
+     */
+    available: {
+        type: Boolean,
+        default: true
+    },
+    /**
      * @name experience
      * @type Number
      */
