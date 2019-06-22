@@ -2,13 +2,15 @@ import studentService from './student.service';
 
 export default {
     match(req, res, next) {
+        const result = {
+            data: {
+                list: [],
+                total: 0
+            }
+        };
+
         if (!req.query.title) {
-            return res.json({
-                data: {
-                    students: [],
-                    total: 0
-                }
-            });
+            return res.json(result);
         }
 
         const { account } = req;
@@ -26,12 +28,10 @@ export default {
             })
             .then((query) => studentService.match(query, page, limit, ['-account']))
             .then(([foundStudents, totalStudents]) => {
-                const data = {
-                    list: foundStudents,
-                    total: totalStudents
-                };
+                result.list = foundStudents,
+                result.total = totalStudents
 
-                return res.json({ data });
+                return res.json({ data: result });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
