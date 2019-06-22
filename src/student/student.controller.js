@@ -1,14 +1,18 @@
 import studentService from './student.service';
 
 export default {
-    match(req, res, next) {        
-        if (!Object.keys(req.query).length) {
+    match(req, res, next) {
+        if (!req.query.title) {
             return res.json({
-                data: []
+                data: {
+                    students: [],
+                    total: 0
+                }
             });
         }
 
         const { account } = req;
+        const { page, limit } = req.query;
         
         return account.getProfile()
             .then((accountWithProfile) => {
@@ -18,13 +22,16 @@ export default {
                     universityId: profile.universities
                 });
         
-                return studentService.match(query)
-                    .then((foundStudents) => {
-                        const data = foundStudents;
-        
-                        return res.json({ data });
-                    })
-                    .catch((error) => next({ message: error.errmsg || error }));
+                return query;
+            })
+            .then((query) => studentService.match(query, page, limit))
+            .then(([foundStudents, totalStudents]) => {
+                const data = {
+                    students: foundStudents,
+                    total: totalStudents
+                };
+
+                return res.json({ data });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },

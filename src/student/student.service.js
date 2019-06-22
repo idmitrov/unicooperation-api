@@ -5,11 +5,17 @@ export default {
      * Matching Students by given criteria like experience, title etc..
      * @name match
      * @param {Object} criteria 
+     * @param {Number} page
+     * @param {Number} limit
+     * @param {Array} projection
      */
-    match(criteria) {
+    match(criteria, page = 1, limit = 10, projection = []) {
         const query = {};
         const optionalCriterias = ['experience', 'verified', 'universityId'];
         
+        page = Number(page) || 0;
+        limit = Number(limit) || 10;
+
         if (criteria.title) {
             const regex = new RegExp(`^${criteria.title}`, 'i');
             
@@ -29,8 +35,14 @@ export default {
                 }
             }
         });
-
-        return Student.find(query);
+        
+        return Promise.all([
+            Student.find(query)
+                .select(projection)
+                .skip(page > 1 ? (page - 1) * limit : 0)
+                .limit(limit),
+            Student.find(query).countDocuments()
+        ]);
     },
     /**
      * Find a student by id
