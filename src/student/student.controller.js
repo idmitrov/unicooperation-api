@@ -24,7 +24,7 @@ export default {
         
                 return query;
             })
-            .then((query) => studentService.match(query, page, limit))
+            .then((query) => studentService.match(query, page, limit, ['-account']))
             .then(([foundStudents, totalStudents]) => {
                 const data = {
                     students: foundStudents,
