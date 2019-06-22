@@ -17,7 +17,7 @@ export default {
         limit = Number(limit) || 10;
 
         if (criteria.title) {
-            const regex = new RegExp(`^${criteria.title}`, 'i');
+            const regex = new RegExp(`${criteria.title}`, 'i');
             
             query.title = { $regex: regex };
         }
