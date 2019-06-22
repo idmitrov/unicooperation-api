@@ -9,10 +9,6 @@ export default {
             }
         };
 
-        if (!req.query.title) {
-            return res.json(result);
-        }
-
         const { account } = req;
         const { page, limit } = req.query;
         
