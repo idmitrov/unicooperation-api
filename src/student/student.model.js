@@ -108,7 +108,7 @@ const studentSchema = new dbSchema({
      */
     title: {
         type: String,
-        default: ''
+        default: 'student'
     },
     /**
      * @name linkedinUrl
