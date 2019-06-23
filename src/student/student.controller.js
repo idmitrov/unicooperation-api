@@ -22,7 +22,7 @@ export default {
         
                 return query;
             })
-            .then((query) => studentService.match(query, page, limit, ['-account']))
+            .then((query) => studentService.match(query, page, limit))
             .then(([foundStudents, totalStudents]) => {
                 result.list = foundStudents,
                 result.total = totalStudents
@@ -54,15 +54,9 @@ export default {
             .catch((error) => next({ message: error.errmsg || error }));
     },
     preview(req, res, next) {
-        // const { account } = req;
-        const projection = ['-account'];
-
-        return studentService.findById(req.params.id, projection)
+        return studentService.getPreview(req.params.id)
             .then((foundStudent) => {
-                const data = foundStudent.toObject();
-
-                // data.isFollowed = foundStudent.partners.indexOf(account.profileId) > -1;
-                // delete data.partners;
+                const data = foundStudent;
 
                 return res.json({ data });
             })

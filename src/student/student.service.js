@@ -38,11 +38,17 @@ export default {
         
         return Promise.all([
             Student.find(query)
+                .populate('account', 'type -_id')
                 .select(projection)
                 .skip(page > 1 ? (page - 1) * limit : 0)
                 .limit(limit),
             Student.find(query).countDocuments()
         ]);
+    },
+    getPreview(studentId) {
+        return this
+            .findById(studentId)
+            .populate('account', 'type -_id')
     },
     /**
      * Find a student by id
