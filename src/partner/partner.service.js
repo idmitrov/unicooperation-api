@@ -22,7 +22,7 @@ export default {
      * @param {String} update 
      */
     findByIdAndUpdate(id, update) {
-        return Partner.findOneAndUpdate(id, update, { new: true });
+        return Partner.findOneAndUpdate({ '_id': id }, update, { new: true });
     },
     /**
      * Filter partners by name which starts with a given query

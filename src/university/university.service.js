@@ -31,7 +31,7 @@ export default {
      *  @name findByIdAndUpdate
      */
     findByIdAndUpdate(id, update) {
-        return University.findOneAndUpdate(id, update, { new: true });
+        return University.findOneAndUpdate({ '_id': id }, update, { new: true });
     },
     /**
      * Filter universities by name which starts with a given query
