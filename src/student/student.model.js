@@ -63,6 +63,14 @@ const studentSchema = new dbSchema({
         required: true
     },
     /**
+     * @name instagramUrl
+     * @type String
+     */
+    instagramUrl: {
+        type: String,
+        default: null
+    },
+    /**
      * @name lastName
      * @type String
      */
