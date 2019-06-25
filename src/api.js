@@ -92,12 +92,16 @@ const configureSockets = (socketIO) => {
 
 const handleErrors = (api) => {
     api.use((ex, req, res, next) => {
-        if (ex) {
-            let errors = [ex.message ? ex.message : ex];
+        if (ex) {            
+            let errors = [];
 
             if (ex.errors) {
                 errors = Object.keys(ex.errors)
                     .map((errKey) => ex.errors[errKey].properties.message);
+            } else if (ex.message) {
+                errors.push({ message: ex.message.toString() });
+            } else {
+                errors.push({ message: ex.toString() });
             }
 
             return res
