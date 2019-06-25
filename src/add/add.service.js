@@ -5,7 +5,16 @@ const defaultAddsLimit = 10;
 const defaultAddsSort = 'createdAt';
 
 export default {
-    getAdds(skip = defaultAddsSkip, limit = defaultAddsLimit, sort = defaultAddsSort, active = true, projection = []) {
+    /**
+     * Get all adds, array of adds
+     * @name getAll
+     * @param {Number} skip 
+     * @param {Number} limit 
+     * @param {String} sort 
+     * @param {Boolean} active 
+     * @param {Array} projection 
+     */
+    getAll(skip = defaultAddsSkip, limit = defaultAddsLimit, sort = defaultAddsSort, active = true, projection = []) {
         const skipNumeric = parseInt(skip);
         const limitNumeric = parseInt(limit);
         
@@ -21,9 +30,45 @@ export default {
                 .countDocuments()
         ]);
     },
-    createNewAdd(title, content, author) {
+    /**
+     * Create new add
+     * @name create
+     * @param {String} title 
+     * @param {String} content 
+     * @param {Object} author 
+     */
+    create(title, content, author) {
         const add = new Add({ title, content, author });
 
         return add.save();
+    },
+    /**
+     * Edit existing Add
+     * @name edit
+     * @param {String} addId 
+     * @param {String} title 
+     * @param {String} content 
+     */
+    edit(addId, title, content) {
+        if (!addId) {
+            throw Error('Id is missing');
+        }
+        
+        if (!title) {
+            throw Error('Title is missing');
+        }
+
+        if (!content) {
+            throw Error('Content is missing');
+        }
+
+        return Add.findOneAndUpdate({ '_id': addId }, { title, content }, { new: true })
+            .then((add) => {
+                if (!add) {
+                    throw Error('Cannot modify unknown entity.')
+                }
+                
+                return add;
+            });
     }
 }

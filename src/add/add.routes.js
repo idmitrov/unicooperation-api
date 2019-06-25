@@ -9,5 +9,6 @@ const router = new Router();
 router
     .get('', [auth()], addController.getAdds)
     .post('', [auth(accountType.partner)], addController.createNewAdd)
+    .put('/:addId', [auth(accountType.partner)], addController.editExistingAdd)
 
 export default router;
