@@ -94,10 +94,16 @@ const handleErrors = (api) => {
     api.use((ex, req, res, next) => {
         if (ex) {            
             let errors = [];
-
+            
             if (ex.errors) {
                 errors = Object.keys(ex.errors)
-                    .map((errKey) => ex.errors[errKey].properties.message);
+                    .map((errKey) => {
+                        if (ex.errors[errKey].properties) {
+                            return ex.errors[errKey].properties.message
+                        }
+
+                        return ex.errors[errKey].message;
+                    });
             } else if (ex.message) {
                 errors.push({ message: ex.message.toString() });
             } else {
