@@ -1,6 +1,24 @@
 import addService from "./add.service";
+import partnerService from '../partner/partner.service';
 
 export default {
+    getUniversityPartnersAdds(req, res, next) {
+        const { account } = req;
+
+        account.getProfile()
+            .then((accountProfile) => partnerService.findByUniversityId(accountProfile.university))
+            .then((partners) => {
+                const partnersIds = partners.map((partner) => partner.id);
+                
+                return addService.getAll({
+                    author: { $in: partnersIds }
+                });
+            })
+            .then((partnersAdds) => {
+                res.json({ data: partnersAdds });
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
+    },
     getMyAdds(req, res, next) {
         const { account } = req;
         const conditions = { isActive: true, author: account.profile };
