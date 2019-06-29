@@ -9,7 +9,7 @@ export const authSocket = (socket, next) => {
         next(new Error('Unauthenticated!'))
     } else {
         jwt.verify(token, config.api.secret, (err, decoded) => {
-            if (!decoded.sub || !decoded.password) {
+            if (!decoded || !decoded.sub || !decoded.password) {
                 return next(new Error('Unauthorized'));
             } else {
                 Account.findById(decoded.sub)
@@ -43,7 +43,7 @@ export const auth = (roles) => (req, res, next) => {
     }
 
     jwt.verify(token, config.api.secret, (err, decoded) => {
-        if (!decoded.sub || !decoded.password) {
+        if (!decoded || !decoded.sub || !decoded.password) {
             return res
                 .status(401)
                 .json({ error: 'Unauthorized' });
