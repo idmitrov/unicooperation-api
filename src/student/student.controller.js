@@ -13,9 +13,7 @@ export default {
         const { page, limit } = req.query;
         
         return account.getProfile()
-            .then((accountWithProfile) => {
-                const profile = accountWithProfile.profile;
-                
+            .then((profile) => {
                 const query = Object.assign({}, req.query, {
                     university: profile.universities
                 });

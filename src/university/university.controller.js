@@ -10,9 +10,7 @@ export default {
 
                 if (followedUniversityProfile) {
                     return account.getProfile()
-                        .then((accountWithProfile) => {
-                            const followerProfile = accountWithProfile.profile;
-                            
+                        .then((followerProfile) => {
                             followerProfile.universities.push(followedUniversityProfile.id);
                             followerProfile.save();
                             
