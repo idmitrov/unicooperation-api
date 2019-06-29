@@ -15,7 +15,7 @@ export default {
             case accountType.student: {
                 req.account.getProfile()
                     .then((accountWithProfile) => {
-                        const accountProfile = accountWithProfile.profileId;
+                        const accountProfile = accountWithProfile.profile;
                         const populate = ['publisher'];
                         
                         return publicationService.getList(accountProfile.university, sort, skip, limit, populate);
@@ -34,7 +34,7 @@ export default {
             case accountType.university: {
                 const populate = ['publisher'];
 
-                publicationService.getList(account.profileId, sort, skip, limit, populate)
+                publicationService.getList(account.profile, sort, skip, limit, populate)
                     .then(([publications, count]) => {
                         const data = {
                             list: publications,
@@ -55,16 +55,16 @@ export default {
 
         return req.account.getProfile()
             .then((accountWithProfile) => {
-                const publisherId = accountWithProfile.profileId.id;
+                const publisherId = accountWithProfile.profile.id;
                 let feedId = null;
 
                 switch (type) {
                     case accountType.student: {
-                        feedId = accountWithProfile.profileId.university;
+                        feedId = accountWithProfile.profile.university;
                         break;
                     }
                     case accountType.university: {
-                        feedId = accountWithProfile.profileId.id;
+                        feedId = accountWithProfile.profile.id;
                         break;
                     }
                     default: throw new Error('Invalid account type');

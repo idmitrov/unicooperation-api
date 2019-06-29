@@ -14,14 +14,14 @@ export default (client) => {
         switch (account.type) {
             case accountType.student: {
 
-                studentService.findById(account.profileId)
+                studentService.findById(account.profile)
                     .then((student) => {
                         joinRoom(student.university, client);
                     });
                 break;
             }
             case accountType.university: {
-                joinRoom(account.profileId, client);
+                joinRoom(account.profile, client);
                 break;
             }
             default: console.error('Invalid account type tried to join');

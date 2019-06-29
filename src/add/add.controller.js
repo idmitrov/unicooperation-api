@@ -3,7 +3,7 @@ import addService from "./add.service";
 export default {
     getMyAdds(req, res, next) {
         const { account } = req;
-        const conditions = { isActive: true, author: account.profileId };
+        const conditions = { isActive: true, author: account.profile };
 
         addService.getAll(conditions)
             .then(([adds, total]) => {
@@ -18,7 +18,7 @@ export default {
     },
     createNewAdd(req, res, next) {
         const { title, content }= req.body;
-        const author = req.account.profileId;
+        const author = req.account.profile;
 
         addService.create(title, content, author)
             .then((createdAdd) => {

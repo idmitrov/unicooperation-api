@@ -11,7 +11,7 @@ export default {
             .catch((error) => next({ message: error.errmsg || error }));
     },
     getMyProfile(req, res, next) {
-        return partnerService.findById(req.account.profileId)
+        return partnerService.findById(req.account.profile)
             .then((foundPartner) => {
                 return res.json({
                     data: foundPartner
@@ -28,7 +28,7 @@ export default {
             };
         }
 
-        partnerService.findByIdAndUpdate(req.account.profileId, update)
+        partnerService.findByIdAndUpdate(req.account.profile, update)
             .then((updatedPartner) => {
                 return res.json({ data: updatedPartner });
             })
@@ -39,7 +39,7 @@ export default {
 
         return partnerService.create(name, countryCode, req.account.id)
             .then((createdPartner) => {
-                req.account.setProfileId(createdPartner.id)
+                req.account.setProfile(createdPartner.id)
                     .then((savedAccount) => {
                         const data = { account: savedAccount };
 

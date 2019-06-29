@@ -4,14 +4,14 @@ export default {
     follow(req, res, next) {
         const { account, body } = req;
 
-        return universityService.follow(account.profileId, body.followingId)
+        return universityService.follow(account.profile, body.followingId)
             .then((followedUniversityProfile) => {
                 let data = null;
 
                 if (followedUniversityProfile) {
                     return account.getProfile()
                         .then((accountWithProfile) => {
-                            const followerProfile = accountWithProfile.profileId;
+                            const followerProfile = accountWithProfile.profile;
                             
                             followerProfile.universities.push(followedUniversityProfile.id);
                             followerProfile.save();
@@ -35,7 +35,7 @@ export default {
         return universityService.findByName(req.params.name, projection)
             .then((foundUniversity) => {
                 const data = foundUniversity.toObject();
-                data.isFollowed = foundUniversity.partners.indexOf(account.profileId) > -1;
+                data.isFollowed = foundUniversity.partners.indexOf(account.profile) > -1;
                 delete data.partners;
 
                 return res.json({ data });
@@ -43,7 +43,7 @@ export default {
             .catch((error) => next({ message: error.errmsg || error }));
     },
     me(req, res, next) {
-        return universityService.findById(req.account.profileId)
+        return universityService.findById(req.account.profile)
             .then((foundUniversity) => {
                 const data = foundUniversity;
                 
@@ -61,7 +61,7 @@ export default {
             };
         }
 
-        return universityService.findByIdAndUpdate(req.account.profileId, update)
+        return universityService.findByIdAndUpdate(req.account.profile, update)
             .then((updatedUniversity) => {
                 const data = updatedUniversity;
 
@@ -107,7 +107,7 @@ export default {
         
         return universityService.create(name, countryCode, req.account.id)
             .then((createdUniversity) => {
-                req.account.setProfileId(createdUniversity.id)
+                req.account.setProfile(createdUniversity.id)
                     .then((savedAccount) => {
                         const data = { account: savedAccount };
                         

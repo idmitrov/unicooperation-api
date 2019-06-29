@@ -14,7 +14,7 @@ export default {
         
         return account.getProfile()
             .then((accountWithProfile) => {
-                const profile = accountWithProfile.profileId;
+                const profile = accountWithProfile.profile;
                 
                 const query = Object.assign({}, req.query, {
                     university: profile.universities
@@ -40,14 +40,14 @@ export default {
             };
         }
 
-        studentService.findByIdAndUpdate(req.account.profileId, update)
+        studentService.findByIdAndUpdate(req.account.profile, update)
             .then((updatedStudent) => {
                 return res.json({ data: updatedStudent });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
     me(req, res, next) {
-        studentService.findById(req.account.profileId)
+        studentService.findById(req.account.profile)
             .then((foundProfile) => {
                 return res.json({ data: foundProfile });
             })
@@ -67,7 +67,7 @@ export default {
 
         return studentService.create(firstName, facultyId, university, req.account.id)
             .then((createdStudent) => {
-                req.account.setProfileId(createdStudent.id)
+                req.account.setProfile(createdStudent.id)
                     .then((savedAccount) => {
                         const data = { account: savedAccount };
 
