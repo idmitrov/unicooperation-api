@@ -14,8 +14,13 @@ export default {
                     author: { $in: partnersIds }
                 });
             })
-            .then((partnersAdds) => {
-                res.json({ data: partnersAdds });
+            .then(([partnersAdds, totalPartnersAdds]) => {
+                const data = {
+                    list: partnersAdds,
+                    total: totalPartnersAdds
+                };
+                
+                res.json({ data });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
