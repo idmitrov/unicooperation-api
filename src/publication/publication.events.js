@@ -16,7 +16,7 @@ export default (client) => {
 
                 studentService.findById(account.profileId)
                     .then((student) => {
-                        joinRoom(student.universityId, client);
+                        joinRoom(student.university, client);
                     });
                 break;
             }

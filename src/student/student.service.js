@@ -11,7 +11,7 @@ export default {
      */
     match(criteria, page = 1, limit = 10, projection = []) {
         const query = { available: true };
-        const optionalCriterias = ['experience', 'verified', 'universityId'];
+        const optionalCriterias = ['experience', 'verified', 'university'];
         
         page = Number(page) || 0;
         limit = Number(limit) || 10;
@@ -66,11 +66,11 @@ export default {
      * @name create
      * @param {String} firstName 
      * @param {String} facultyId 
-     * @param {String} universityId 
+     * @param {String} university 
      * @param {String} account 
      */
-    create(firstName, facultyId, universityId, account) {        
-        const newStudent = new Student({ firstName, facultyId, universityId, account });
+    create(firstName, facultyId, university, account) {        
+        const newStudent = new Student({ firstName, facultyId, university, account });
 
         return newStudent.save();
     },

@@ -127,16 +127,16 @@ const studentSchema = new dbSchema({
         default: null
     },
     /**
-     * @name universityId
+     * @name university
      * @type String
      */
-    universityId: {
+    university: {
         type: dbSchema.Types.ObjectId,
         ref: 'University',
         required: true
     }
 }, studentSchemaOptions);
 
-studentSchema.index({ universityId: 1, facultyId: 1 }, { unique: true })
+studentSchema.index({ university: 1, facultyId: 1 }, { unique: true })
 
 export default dbModel('Student', studentSchema);

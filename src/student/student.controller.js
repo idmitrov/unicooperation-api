@@ -17,7 +17,7 @@ export default {
                 const profile = accountWithProfile.profileId;
                 
                 const query = Object.assign({}, req.query, {
-                    universityId: profile.universities
+                    university: profile.universities
                 });
         
                 return query;
@@ -63,9 +63,9 @@ export default {
             .catch((error) => next({ message: error.errmsg || error }));
     },
     create(req, res, next) {
-        const { firstName, facultyId, universityId } = req.body;
+        const { firstName, facultyId, university } = req.body;
 
-        return studentService.create(firstName, facultyId, universityId, req.account.id)
+        return studentService.create(firstName, facultyId, university, req.account.id)
             .then((createdStudent) => {
                 req.account.setProfileId(createdStudent.id)
                     .then((savedAccount) => {

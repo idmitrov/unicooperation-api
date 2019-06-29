@@ -18,7 +18,7 @@ export default {
                         const accountProfile = accountWithProfile.profileId;
                         const populate = ['publisher'];
                         
-                        return publicationService.getList(accountProfile.universityId, sort, skip, limit, populate);
+                        return publicationService.getList(accountProfile.university, sort, skip, limit, populate);
                     })
                     .then(([publications, count]) => {
                         const data = {
@@ -60,7 +60,7 @@ export default {
 
                 switch (type) {
                     case accountType.student: {
-                        feedId = accountWithProfile.profileId.universityId;
+                        feedId = accountWithProfile.profileId.university;
                         break;
                     }
                     case accountType.university: {
