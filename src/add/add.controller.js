@@ -2,7 +2,10 @@ import addService from "./add.service";
 
 export default {
     getMyAdds(req, res, next) {
-        addService.getAll()
+        const { account } = req;
+        const conditions = { isActive: true, author: account.profileId };
+
+        addService.getAll(conditions)
             .then(([adds, total]) => {
                 const data = {
                     list: adds,
@@ -15,7 +18,7 @@ export default {
     },
     createNewAdd(req, res, next) {
         const { title, content }= req.body;
-        const author = req.account;
+        const author = req.account.profileId;
 
         addService.create(title, content, author)
             .then((createdAdd) => {
