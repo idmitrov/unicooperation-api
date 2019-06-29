@@ -1,6 +1,17 @@
 import Partner from './partner.model';
 
 export default {
+    /**
+     * Finds all Partners which partner.universities contains
+     * the provided universityId
+     * @name findByUniversityId
+     * @param {String} universityId
+     */
+    findByUniversityId(universityId) {
+        return Partner.find({
+            universities: universityId
+        });
+    },
     findByName(name, projection = []) {
         return Partner.findOne({ name })
             .select(projection);
