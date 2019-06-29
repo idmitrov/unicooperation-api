@@ -69,12 +69,11 @@ export default {
                     default: throw new Error('Invalid account type');
                 }
 
-                // TODO: Get limit and sort from the client
                 const skip = 0; 
                 const limit = 10;
                 const sort = 'createdAt';
                 const populate = ['publisher'];
-
+                // TODO: Get created publication index and returns getList createdPublicationIndex + limit
                 return publicationService.create(type, publisherId, feedId, content)
                     .then(() => {
                         return publicationService.getList(feedId, sort, skip, limit, populate);
