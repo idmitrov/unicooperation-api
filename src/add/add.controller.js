@@ -1,7 +1,7 @@
 import addService from "./add.service";
 
 export default {
-    getAdds(req, res, next) {
+    getMyAdds(req, res, next) {
         addService.getAll()
             .then(([adds, total]) => {
                 const data = {

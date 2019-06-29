@@ -7,7 +7,7 @@ import { auth } from '../account/account.middleware';
 const router = new Router();
 
 router
-    .get('', [auth()], addController.getAdds)
+    .get('/mine', [auth(accountType.partner)], addController.getMyAdds)
     .post('', [auth(accountType.partner)], addController.createNewAdd)
     .put('/:addId', [auth(accountType.partner)], addController.editExistingAdd)
 

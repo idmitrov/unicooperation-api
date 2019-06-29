@@ -8,25 +8,25 @@ export default {
     /**
      * Get all adds, array of adds
      * @name getAll
+     * @param {Object} conditions
      * @param {Number} skip 
      * @param {Number} limit 
      * @param {String} sort 
-     * @param {Boolean} active 
      * @param {Array} projection 
      */
-    getAll(skip = defaultAddsSkip, limit = defaultAddsLimit, sort = defaultAddsSort, active = true, projection = []) {
+    getAll(conditions = { isActive: true }, skip = defaultAddsSkip, limit = defaultAddsLimit, sort = defaultAddsSort, projection = []) {
         const skipNumeric = parseInt(skip);
         const limitNumeric = parseInt(limit);
         
         return Promise.all([
             Add
-                .find({ isActive: active })
+                .find(conditions)
                 .select(projection)
                 .sort(`-${sort}`)
                 .skip(skipNumeric || defaultAddsSkip)
                 .limit(limitNumeric || defaultAddsLimit),
             Add
-                .find({ isActive: active })
+                .find(conditions)
                 .countDocuments()
         ]);
     },
