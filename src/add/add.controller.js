@@ -11,6 +11,7 @@ export default {
                 const partnersIds = partners.map((partner) => partner.id);
                 
                 return addService.getAll({
+                    isActive: true,
                     author: { $in: partnersIds }
                 });
             })
