@@ -33,6 +33,7 @@ export const auth = (roles) => (req, res, next) => {
             .status(401)
             .json({ error: 'Unauthorized' });
     }
+
     const token = req.headers.authorization.split(/^Bearer\s+/i)[1];
 
     if (!token) {
@@ -56,11 +57,19 @@ export const auth = (roles) => (req, res, next) => {
                         .json({ error: 'Unauthorized' });
                 }
 
-                if (roles && Array.isArray(roles) && roles.length) {
-                    if (!roles.includes(foundAccount.type)) {
-                        return res
-                            .status(401)
-                            .json({ error: 'Unauthorized' });
+                if (roles) {
+                    if (Array.isArray(roles)) {
+                        if (!roles.includes(foundAccount.type)) {
+                            return res
+                                .status(401)
+                                .json({ error: 'Unauthorized' });
+                        }
+                    } else {
+                        if (roles !== foundAccount.type) {
+                            return res
+                                .status(401)
+                                .json({ error: 'Unauthorized' });
+                        }
                     }
                 }
 
