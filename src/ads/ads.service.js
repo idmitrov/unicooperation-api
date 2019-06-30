@@ -21,6 +21,7 @@ export default {
         return Promise.all([
             Ad
                 .find(conditions)
+                .lean()
                 .select(projection)
                 .sort(`-${sort}`)
                 .skip(skipNumeric || defaultAdsSkip)
@@ -64,20 +65,12 @@ export default {
      * @param {String} title 
      * @param {String} content 
      */
-    edit(adId, title, content) {
+    edit(adId, update) {
         if (!adId) {
             throw Error('Id is missing');
         }
-        
-        if (!title) {
-            throw Error('Title is missing');
-        }
 
-        if (!content) {
-            throw Error('Content is missing');
-        }
-
-        return Ad.findOneAndUpdate({ '_id': adId }, { title, content }, { new: true })
+        return Ad.findOneAndUpdate({ '_id': adId }, update, { new: true })
             .then((ad) => {
                 if (!ad) {
                     throw Error('Cannot modify unknown entity.')

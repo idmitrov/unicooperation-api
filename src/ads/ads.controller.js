@@ -2,6 +2,22 @@ import adsService from "./ads.service";
 import partnerService from '../partner/partner.service';
 
 export default {
+    applyToAdd(req, res, next) {
+        const { adId } = req.body;
+        const { account } = req;
+
+        const update = {
+            $addToSet: {
+                candidates: account.profile
+            }
+        }
+        
+        adsService.edit(adId, update)
+            .then((ad) => {
+                return res.json({ data: ad });
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
+    },
     getUniversityPartnersAds(req, res, next) {
         const { account } = req;
 
@@ -16,8 +32,14 @@ export default {
                 });
             })
             .then(([partnersAds, totalPartnersAds]) => {
+                const ads = partnersAds.map((ad) => {
+                    return Object.assign({}, ad, {
+                        applied: ad.candidates.includes(account.profile)
+                    });
+                });
+
                 const data = {
-                    list: partnersAds,
+                    list: ads,
                     total: totalPartnersAds
                 };
                 

@@ -11,5 +11,6 @@ router
     .get('/mine', [auth(accountType.partner)], adsController.getMyAds)
     .post('', [auth(accountType.partner)], adsController.createNewAd)
     .put('/:adId', [auth(accountType.partner)], adsController.editExistingAd)
+    .post('/apply', [auth(accountType.student)], adsController.applyToAdd)
 
 export default router;
