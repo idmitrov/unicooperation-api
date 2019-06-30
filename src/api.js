@@ -26,7 +26,7 @@ import universityRoutes from './university/university.routes';
 import nomenclatursRoutes from './nomenclatures/nomenclatures.routes';
 import partnerRoutes from './partner/partner.routes';
 import publicationRoutes from './publication/publication.routes';
-import addRoutes from './add/add.routes';
+import adsRoutes from './ads/ads.routes';
 
 import publicationEvents from './publication/publication.events';
 
@@ -74,7 +74,7 @@ const configureMiddlewares = (api) => {
 const configureRoutes = (api) => {
     api
         .use('/nom', nomenclatursRoutes)
-        .use('/adds', addRoutes)
+        .use('/ads', adsRoutes)
         .use('/publication', publicationRoutes)
         .use('/university', universityRoutes)
         .use('/student', studentRoutes)

@@ -1,8 +1,8 @@
-import addService from "./add.service";
+import adsService from "./ads.service";
 import partnerService from '../partner/partner.service';
 
 export default {
-    getUniversityPartnersAdds(req, res, next) {
+    getUniversityPartnersAds(req, res, next) {
         const { account } = req;
 
         account.getProfile()
@@ -10,29 +10,29 @@ export default {
             .then((partners) => {
                 const partnersIds = partners.map((partner) => partner.id);
                 
-                return addService.getAll({
+                return adsService.getAll({
                     isActive: true,
                     author: { $in: partnersIds }
                 });
             })
-            .then(([partnersAdds, totalPartnersAdds]) => {
+            .then(([partnersAds, totalPartnersAds]) => {
                 const data = {
-                    list: partnersAdds,
-                    total: totalPartnersAdds
+                    list: partnersAds,
+                    total: totalPartnersAds
                 };
                 
                 res.json({ data });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
-    getMyAdds(req, res, next) {
+    getMyAds(req, res, next) {
         const { account } = req;
         const conditions = { isActive: true, author: account.profile };
 
-        addService.getAll(conditions)
-            .then(([adds, total]) => {
+        adsService.getAll(conditions)
+            .then(([ads, total]) => {
                 const data = {
-                    list: adds,
+                    list: ads,
                     total: total
                 };
 
@@ -40,23 +40,23 @@ export default {
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
-    createNewAdd(req, res, next) {
+    createNewAd(req, res, next) {
         const { title, content }= req.body;
         const author = req.account.profile;
 
-        addService.create(title, content, author)
-            .then((createdAdd) => {
-                return res.json({ data: createdAdd });
+        adsService.create(title, content, author)
+            .then((createdAd) => {
+                return res.json({ data: createdAd });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
-    editExistingAdd(req, res, next) {
+    editExistingAd(req, res, next) {
         const { title, content } = req.body;
-        const { addId } = req.params;
+        const { adId } = req.params;
 
-        addService.edit(addId, title, content)
-            .then((editedAdd) => {
-                return res.json({ data: editedAdd });
+        adsService.edit(adId, title, content)
+            .then((editedAd) => {
+                return res.json({ data: editedAd });
             })
             .catch((error) => {
                 next({ message: error.errmsg || error })

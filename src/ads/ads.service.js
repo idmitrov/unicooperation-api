@@ -1,12 +1,12 @@
-import Add from './add.model';
+import Ad from './ads.model';
 
-const defaultAddsSkip = 0;
-const defaultAddsLimit = 10;
-const defaultAddsSort = 'createdAt';
+const defaultAdsSkip = 0;
+const defaultAdsLimit = 10;
+const defaultAdsSort = 'createdAt';
 
 export default {
     /**
-     * Get all adds, array of adds
+     * Get all ads, array of ads
      * @name getAll
      * @param {Object} conditions
      * @param {Number} skip 
@@ -14,18 +14,18 @@ export default {
      * @param {String} sort 
      * @param {Array} projection 
      */
-    getAll(conditions = { isActive: true }, skip = defaultAddsSkip, limit = defaultAddsLimit, sort = defaultAddsSort, projection = []) {
+    getAll(conditions = { isActive: true }, skip = defaultAdsSkip, limit = defaultAdsLimit, sort = defaultAdsSort, projection = []) {
         const skipNumeric = parseInt(skip);
         const limitNumeric = parseInt(limit);
         
         return Promise.all([
-            Add
+            Ad
                 .find(conditions)
                 .select(projection)
                 .sort(`-${sort}`)
-                .skip(skipNumeric || defaultAddsSkip)
-                .limit(limitNumeric || defaultAddsLimit),
-            Add
+                .skip(skipNumeric || defaultAdsSkip)
+                .limit(limitNumeric || defaultAdsLimit),
+            Ad
                 .find(conditions)
                 .countDocuments()
         ]);
@@ -40,6 +40,7 @@ export default {
     create(title, content, author) {
         let errors = [];
 
+
         if (!title) {
             errors.push({ message: 'Title is missing.' });
         }
@@ -51,20 +52,20 @@ export default {
         if (errors.length) {
             throw { errors };
         }
+        
+        const newAd = new Ad({ title, content, author });
 
-        const add = new Add({ title, content, author });
-
-        return add.save();
+        return newAd.save();
     },
     /**
-     * Edit existing Add
+     * Edit existing Ad
      * @name edit
-     * @param {String} addId 
+     * @param {String} adId 
      * @param {String} title 
      * @param {String} content 
      */
-    edit(addId, title, content) {
-        if (!addId) {
+    edit(adId, title, content) {
+        if (!adId) {
             throw Error('Id is missing');
         }
         
@@ -76,13 +77,13 @@ export default {
             throw Error('Content is missing');
         }
 
-        return Add.findOneAndUpdate({ '_id': addId }, { title, content }, { new: true })
-            .then((add) => {
-                if (!add) {
+        return Ad.findOneAndUpdate({ '_id': adId }, { title, content }, { new: true })
+            .then((ad) => {
+                if (!ad) {
                     throw Error('Cannot modify unknown entity.')
                 }
                 
-                return add;
+                return ad;
             });
     }
 }

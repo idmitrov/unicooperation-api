@@ -1,11 +1,11 @@
 import { dbSchema, dbModel } from '../db';
 import { accountType } from '../account/account.constants';
 
-const addSchemaOptions = {
+const adSchemaOptions = {
     timestamps: true
 };
 
-const addSchema = new dbSchema({
+const adSchema = new dbSchema({
     /**
      * @name title
      * @type String
@@ -46,6 +46,6 @@ const addSchema = new dbSchema({
         type: [accountType.student],
         default: []
     }
-}, addSchemaOptions);
+}, adSchemaOptions);
 
-export default dbModel('Add', addSchema);
+export default dbModel('Ad', adSchema);
