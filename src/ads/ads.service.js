@@ -67,10 +67,11 @@ export default {
      */
     edit(adId, update) {
         if (!adId) {
-            throw Error('Id is missing');
+            throw Error('adId is missing');
         }
 
         return Ad.findOneAndUpdate({ '_id': adId }, update, { new: true })
+            .lean()
             .then((ad) => {
                 if (!ad) {
                     throw Error('Cannot modify unknown entity.')

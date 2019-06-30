@@ -14,6 +14,8 @@ export default {
         
         adsService.edit(adId, update)
             .then((ad) => {
+                ad.applied = true;
+                
                 return res.json({ data: ad });
             })
             .catch((error) => next({ message: error.errmsg || error }));
@@ -34,7 +36,7 @@ export default {
             .then(([partnersAds, totalPartnersAds]) => {
                 const ads = partnersAds.map((ad) => {
                     return Object.assign({}, ad, {
-                        applied: ad.candidates.includes(account.profile)
+                        applied: ad.candidates.some((candidate) => candidate.equals(account.profile.id))
                     });
                 });
 
