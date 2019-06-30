@@ -27,11 +27,13 @@ export default {
             .then((accountProfile) => partnerService.findByUniversityId(accountProfile.university))
             .then((partners) => {
                 const partnersIds = partners.map((partner) => partner.id);
-                
-                return adsService.getAll({
+                const conditions = {
                     isActive: true,
                     author: { $in: partnersIds }
-                });
+                };
+
+                // TODO: SKIP, LIMIT, SORT, PROJECTION
+                return adsService.getAll(conditions);
             })
             .then(([partnersAds, totalPartnersAds]) => {
                 const ads = partnersAds.map((ad) => {
