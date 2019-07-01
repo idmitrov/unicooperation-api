@@ -1,5 +1,6 @@
 import adsService from "./ads.service";
 import partnerService from '../partner/partner.service';
+import { accountType } from "../account/account.constants";
 
 export default {
     applyToAdd(req, res, next) {
@@ -65,6 +66,28 @@ export default {
                 return res.json({ data });
             })
             .catch((error) => next({ message: error.errmsg || error }));
+    },
+    getAdById(req, res, next) {
+        const { adId } = req.params;
+        const { account } = req;
+
+        if (account.type === accountType.student) {
+            adsService.getById(adId)
+                .then((ad) => {
+                    ad.applied = ad.candidates.some((candidate) => candidate.equals(account.profile));
+                    
+                    delete ad.candidates;
+
+                    return res.json({ data: ad });
+                })
+                .catch((error) => next({ message: error.errmsg || error }));
+        } else {
+            adsService.getById(adId, ['-candidates'])
+                .then((ad) => {
+                    return res.json({ data: ad });
+                })
+                .catch((error) => next({ message: error.errmsg || error }));
+        }
     },
     createNewAd(req, res, next) {
         const { title, content }= req.body;

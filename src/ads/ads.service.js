@@ -6,6 +6,18 @@ const defaultAdsSort = 'createdAt';
 
 export default {
     /**
+     * Get a given ad by id
+     * @name getById
+     * @param {String} id 
+     * @param {Array} projection 
+     */
+    getById(id, projection = []) {
+        return Ad
+            .findById(id)
+            .lean()
+            .select(projection);
+    },
+    /**
      * Get all ads, array of ads
      * @name getAll
      * @param {Object} conditions

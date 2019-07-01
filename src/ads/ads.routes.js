@@ -7,6 +7,7 @@ import { auth } from '../account/account.middleware';
 const router = new Router();
 
 router
+    .get('/:adId', [auth([accountType.student, accountType.partner])], adsController.getAdById)
     .get('', [auth(accountType.student)], adsController.getUniversityPartnersAds)
     .get('/mine', [auth(accountType.partner)], adsController.getMyAds)
     .post('', [auth(accountType.partner)], adsController.createNewAd)
