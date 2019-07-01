@@ -7,9 +7,9 @@ import { auth } from '../account/account.middleware';
 const router = new Router();
 
 router
-    .get('/:adId', [auth([accountType.student, accountType.partner])], adsController.getAdById)
     .get('', [auth(accountType.student)], adsController.getUniversityPartnersAds)
     .get('/mine', [auth(accountType.partner)], adsController.getMyAds)
+    .get('/:adId', [auth([accountType.student, accountType.partner])], adsController.getAdById)
     .post('', [auth(accountType.partner)], adsController.createNewAd)
     .put('/:adId', [auth(accountType.partner)], adsController.editExistingAd)
     .post('/apply', [auth(accountType.student)], adsController.applyToAdd)
