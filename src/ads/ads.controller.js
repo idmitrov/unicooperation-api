@@ -100,10 +100,10 @@ export default {
             .catch((error) => next({ message: error.errmsg || error }));
     },
     editExistingAd(req, res, next) {
-        const { title, content } = req.body;
+        const update = req.body;
         const { adId } = req.params;
-
-        adsService.edit(adId, title, content)
+        
+        adsService.edit(adId, update)
             .then((editedAd) => {
                 return res.json({ data: editedAd });
             })
