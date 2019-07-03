@@ -71,23 +71,18 @@ export default {
         const { adId } = req.params;
         const { account } = req;
 
-        if (account.type === accountType.student) {
-            adsService.getById(adId)
-                .then((ad) => {
+        adsService.getById(adId)
+            .then((ad) => {
+                if (account.type === accountType.student) {
                     ad.applied = ad.candidates.some((candidate) => candidate.equals(account.profile));
-                    
-                    delete ad.candidates;
+                }
+                
+                ad.applicationsTotal = ad.candidates.length;
+                delete ad.candidates;
 
-                    return res.json({ data: ad });
-                })
-                .catch((error) => next({ message: error.errmsg || error }));
-        } else {
-            adsService.getById(adId, ['-candidates'])
-                .then((ad) => {
-                    return res.json({ data: ad });
-                })
-                .catch((error) => next({ message: error.errmsg || error }));
-        }
+                return res.json({ data: ad });
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
     },
     createNewAd(req, res, next) {
         const { title, content }= req.body;
