@@ -44,6 +44,28 @@ export default {
         ]);
     },
     /**
+     * Get ad candidates
+     * @name getCandidates
+     * @param {String} adId 
+     * @param {Array} projection 
+     */
+    getCandidates(adId, skip = defaultAdsSkip, limit = defaultAdsLimit, sort=defaultAdsSort, projection = []) {
+        skip = skip || defaultAdsSkip;
+        limit = limit || defaultAdsLimit;
+        sort = sort || defaultAdsSort;
+
+        return Ad.findById(adId)
+            .populate({
+                path: 'candidates',
+                model: 'Student',
+                select: projection
+            })
+            .sort(`-${sort}`)
+            .skip(skip)
+            .limit(limit)
+               .then((ad) => ad.candidates);
+    },
+    /**
      * Create new add
      * @name create
      * @param {String} title 

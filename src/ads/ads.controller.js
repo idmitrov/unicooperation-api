@@ -84,6 +84,17 @@ export default {
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
+    getAdCandidates(req, res, next) {
+        const { skip, limit, sort} = req.query;
+        const { adId } = req.params;
+        const projection = ['-account'];
+        
+        adsService.getCandidates(adId, skip, limit, sort, projection)
+            .then((candidates) => {
+                return res.json({ data: candidates });
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
+    },
     createNewAd(req, res, next) {
         const { title, content }= req.body;
         const author = req.account.profile;
