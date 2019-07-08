@@ -31,7 +31,7 @@ export const auth = (roles) => (req, res, next) => {
     if (!req.headers.authorization) {
         return res
             .status(401)
-            .json({ error: 'Unauthorized' });
+            .json({ error: 'Unauthenticated' });
     }
 
     const token = req.headers.authorization.split(/^Bearer\s+/i)[1];
@@ -39,14 +39,14 @@ export const auth = (roles) => (req, res, next) => {
     if (!token) {
         return res
             .status(401)
-            .json({ error: 'Unauthorized' });
+            .json({ error: 'Unauthenticated' });
     }
 
     jwt.verify(token, config.api.secret, (err, decoded) => {
         if (!decoded || !decoded.sub || !decoded.password) {
             return res
                 .status(401)
-                .json({ error: 'Unauthorized' });
+                .json({ error: 'Unauthenticated' });
         }
 
         Account.findById(decoded.sub)
@@ -54,7 +54,7 @@ export const auth = (roles) => (req, res, next) => {
                 if (!foundAccount || foundAccount.password !== decoded.password) {
                     return res
                         .status(401)
-                        .json({ error: 'Unauthorized' });
+                        .json({ error: 'Unauthenticated' });
                 }
 
                 if (roles) {
