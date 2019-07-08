@@ -28,6 +28,7 @@ import nomenclatursRoutes from './nomenclatures/nomenclatures.routes';
 import partnerRoutes from './partner/partner.routes';
 import publicationRoutes from './publication/publication.routes';
 import interviewsRoutes from './interviews/interviews.routes';
+import cooperationsRoutes from './cooperations/cooperations.routes';
 
 import publicationEvents from './publication/publication.events';
 
@@ -81,6 +82,7 @@ const configureRoutes = (api) => {
         .use('/student', studentRoutes)
         .use('/account', accountRoutes)
         .use('/partner', partnerRoutes)
+        .use('/cooperation', cooperationsRoutes)
         .use('/interview', interviewsRoutes)
         .use('/admin', adminRoutes)
         .use('*', (req, res, next) => next('Unknown endpoint'));
