@@ -21,12 +21,13 @@ import { authSocket } from './account/account.middleware';
 
 import adminRoutes from './admin/admin.routes';
 import accountRoutes from './account/account.routes';
+import adsRoutes from './ads/ads.routes';
 import studentRoutes from './student/student.routes';
 import universityRoutes from './university/university.routes';
 import nomenclatursRoutes from './nomenclatures/nomenclatures.routes';
 import partnerRoutes from './partner/partner.routes';
 import publicationRoutes from './publication/publication.routes';
-import adsRoutes from './ads/ads.routes';
+import interviewsRoutes from './interviews/interviews.routes';
 
 import publicationEvents from './publication/publication.events';
 
@@ -80,6 +81,7 @@ const configureRoutes = (api) => {
         .use('/student', studentRoutes)
         .use('/account', accountRoutes)
         .use('/partner', partnerRoutes)
+        .use('/interview', interviewsRoutes)
         .use('/admin', adminRoutes)
         .use('*', (req, res, next) => next('Unknown endpoint'));
 }
