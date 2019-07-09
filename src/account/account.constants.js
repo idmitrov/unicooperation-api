@@ -4,3 +4,8 @@ export const accountType = {
     university: 'University',
     admin: 'Admin'
 };
+
+export const messages = {
+    unauthenticared: 'Unauthenticated',
+    unauthorized: 'Unauthorized'
+};
