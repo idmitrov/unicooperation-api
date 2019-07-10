@@ -7,7 +7,7 @@ import { auth } from '../account/account.middleware';
 const router = new Router();
 
 router
-    .post('', [auth(accountType.partner)], interviewsController.create)
+    .post('/request', [auth(accountType.partner)], interviewsController.create)
     .put('/accept', auth(accountType.student), interviewsController.accept)
     .put('/complete', auth(accountType.partner), interviewsController.complete)
 
