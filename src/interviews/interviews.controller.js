@@ -35,9 +35,9 @@ export default {
     },
     create(req, res, next) {
         const { account } = req;
-        const { applicant, scheduledDate, ad } = req.body;
+        const { applicant, scheduledDate, ad, title } = req.body;
 
-        interviewsService.create(account.profile, applicant, ad, scheduledDate)
+        interviewsService.create(title, account.profile, applicant, ad, scheduledDate)
             .then((arangedInterview) => {
                 res.json({
                     data: arangedInterview

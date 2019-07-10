@@ -33,13 +33,15 @@ export default {
     /**
      * Create new interview
      * @name create
+     * @param {String} title
      * @param {String} interviewer 
      * @param {String} applicant 
      * @param {DateTime} scheduledDate 
      * @param {String} adId 
      */
-    create(interviewer, applicant, adId, scheduledDate) {
+    create(title, interviewer, applicant, adId, scheduledDate) {
         const interviewData = {
+            title,
             interviewer,
             applicant,
             scheduledDate,

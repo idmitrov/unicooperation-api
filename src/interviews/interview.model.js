@@ -96,6 +96,14 @@ const interviewSchema = new dbSchema({
     isActive: {
         type: Boolean,
         default: true
+    },
+    /**
+     * @name title
+     * @type String
+     */
+    title: {
+        type: String,
+        required: true
     }
 }, interviewSchemaOptions);
 
