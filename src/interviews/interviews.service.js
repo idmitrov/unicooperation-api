@@ -14,15 +14,31 @@ const allowedInterviewProps = [
 ];
 
 export default {
+    getByCriteria(criteria, projection = []) {
+        return Interview
+            .find(criteria)
+            .select(projection);
+    },
+    /**
+     * Get an interview by id
+     * @name getById
+     * @param {String} interviewId 
+     * @param {Array} projection 
+     */
+    getById(interviewId, projection) {
+        return Interview
+            .findById(interviewId)
+            .select(projection);
+    },
     /**
      * Create new interview
-     * @name createInterview
+     * @name create
      * @param {String} interviewer 
      * @param {String} applicant 
      * @param {DateTime} scheduledDate 
      * @param {String} adId 
      */
-    createInterview(interviewer, applicant, adId, scheduledDate) {
+    create(interviewer, applicant, adId, scheduledDate) {
         const interviewData = {
             interviewer,
             applicant,
@@ -36,11 +52,11 @@ export default {
     },
     /**
      * Edit an exising interview
-     * @name editInterview
+     * @name edit
      * @param {String} interviewId 
      * @param {Object} edits 
      */
-    editInterview(interviewId, edits) {
+    edit(interviewId, edits) {
         return Interview.findById(interviewId)
             .then((interview) => {
                 if (!interview) {
