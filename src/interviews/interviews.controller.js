@@ -3,9 +3,9 @@ import interviewsService from './interviews.service';
 export default {
     create(req, res, next) {
         const { account } = req;
-        const { applicant, scheduledDate } = req.body;
+        const { applicant, scheduledDate, ad } = req.body;
 
-        interviewsService.createInterview(account.profile, applicant, scheduledDate)
+        interviewsService.createInterview(account.profile, applicant, ad, scheduledDate)
             .then((arangedInterview) => {
                 res.json({
                     data: arangedInterview

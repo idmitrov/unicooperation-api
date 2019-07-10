@@ -22,7 +22,7 @@ export default {
      * @param {DateTime} scheduledDate 
      * @param {String} adId 
      */
-    createInterview(interviewer, applicant, scheduledDate, adId) {
+    createInterview(interviewer, applicant, adId, scheduledDate) {
         const interviewData = {
             interviewer,
             applicant,
