@@ -67,11 +67,12 @@ export default {
                     throw new Error('Interview does not exist');
                 }
 
-                edits.forEach((editKey) => {
-                    if (allowedInterviewProps.includes(editKey)) {
-                        interview[editKey] = edits[editKey];
-                    }
-                });
+                Object.keys(edits)
+                    .forEach((editKey) => {
+                        if (allowedInterviewProps.includes(editKey)) {
+                            interview[editKey] = edits[editKey];
+                        }
+                    });
 
                 return interview.save();
             });

@@ -45,6 +45,17 @@ export default {
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
+    edit(req, res, next) {
+        const { interview } = req.body;
+
+        interviewsService.edit(interview._id, interview)
+            .then((arangedInterview) => {
+                res.json({
+                    data: arangedInterview
+                })
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
+    },
     accept(req, res, next) {
         const { interviewId, accepted } = req.body;
         const acceptDate = new Date();
