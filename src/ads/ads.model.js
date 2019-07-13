@@ -12,7 +12,10 @@ const adSchema = new dbSchema({
      */
     title: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        minlength: 1,
+        maxlength: 50
     },
     /**
      * @name content
@@ -20,7 +23,10 @@ const adSchema = new dbSchema({
      */
     content: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        minlength: 1,
+        maxlength: 500
     },
     /**
      * @name author
