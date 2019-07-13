@@ -5,12 +5,12 @@ const allowedInterviewProps = [
     'acceptDate',
     'accepted',
     'scheduledDate',
-    'applicantNotes',
     'applicant',
-    'interviewerNotes',
     'address',
     'interviewer',
-    'ad'
+    'ad',
+    'title',
+    'description'
 ];
 
 export default {
@@ -34,14 +34,16 @@ export default {
      * Create new interview
      * @name create
      * @param {String} title
+     * @param {String} description
      * @param {String} interviewer 
      * @param {String} applicant 
      * @param {DateTime} scheduledDate 
      * @param {String} adId 
      */
-    create(title, interviewer, applicant, adId, scheduledDate) {
+    create(title, description, interviewer, applicant, adId, scheduledDate) {
         const interviewData = {
             title,
+            description,
             interviewer,
             applicant,
             scheduledDate,
