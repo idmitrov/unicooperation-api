@@ -3,6 +3,22 @@ import partnerService from '../partner/partner.service';
 import { accountType } from "../account/account.constants";
 
 export default {
+    cancelAdApplication(req, res, next) {
+        const { adId } = req.body;
+        const { account } = req;
+
+        const update = {
+            $pull: { candidates: account.profile } 
+        };
+
+        adsService.edit(adId, update)
+            .then((ad) => {
+                ad.applicationsTotal = ad.candidates.length;
+
+                res.json({ data: ad });
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
+    },
     applyToAdd(req, res, next) {
         const { adId } = req.body;
         const { account } = req;
@@ -16,8 +32,9 @@ export default {
         adsService.edit(adId, update)
             .then((ad) => {
                 ad.applied = true;
+                ad.applicationsTotal = ad.candidates.length;
                 
-                return res.json({ data: ad });
+                res.json({ data: ad });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
@@ -63,7 +80,7 @@ export default {
                     total: total
                 };
 
-                return res.json({ data });
+                res.json({ data });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
@@ -80,7 +97,7 @@ export default {
                 ad.applicationsTotal = ad.candidates.length;
                 delete ad.candidates;
 
-                return res.json({ data: ad });
+                res.json({ data: ad });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
@@ -91,7 +108,7 @@ export default {
         
         adsService.getCandidates(adId, skip, limit, sort, projection)
             .then((candidates) => {
-                return res.json({ data: candidates });
+                res.json({ data: candidates });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
@@ -101,7 +118,7 @@ export default {
 
         adsService.create(title, content, author)
             .then((createdAd) => {
-                return res.json({ data: createdAd });
+                res.json({ data: createdAd });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
@@ -111,7 +128,7 @@ export default {
         
         adsService.edit(adId, update)
             .then((editedAd) => {
-                return res.json({ data: editedAd });
+                res.json({ data: editedAd });
             })
             .catch((error) => {
                 next({ message: error.errmsg || error })
