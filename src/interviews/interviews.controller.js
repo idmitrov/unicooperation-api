@@ -24,9 +24,9 @@ export default {
             throw new Error('Get mine interviews failed');
         }
     },
-    get() {
-        const { interviewId } = req.param;
-        
+    get(req, res, next) {
+        const { interviewId } = req.params;
+
         interviewsService.getById(interviewId)
             .then((foundInterview) => {
                 res.json({ data: foundInterview });
