@@ -15,6 +15,14 @@ const interviewSchema = new dbSchema({
         required: true
     },
     /**
+     * @Name description
+     * @type String
+     */
+    description: {
+        type: String,
+        required: true
+    },
+    /**
      * @name interviewer
      * @type String
      */
@@ -32,14 +40,6 @@ const interviewSchema = new dbSchema({
         default: null
     },
     /**
-     * @name interviewerNotes
-     * @type String
-     */
-    interviewerNotes: {
-        type: String,
-        default: null
-    },
-    /**
      * @name interviewed
      * @type String
      */
@@ -47,14 +47,6 @@ const interviewSchema = new dbSchema({
         type: dbSchema.Types.ObjectId,
         ref: 'Student',
         required: true
-    },
-    /**
-     * @name applicantNotes
-     * @type String
-     */
-    applicantNotes: {
-        type: String,
-        default: null
     },
     /**
      * @name scheduledDate
@@ -72,14 +64,6 @@ const interviewSchema = new dbSchema({
     accepted: {
         type: Boolean,
         default: false
-    },
-    /**
-     * @name acceptDate,
-     * @type DateTime
-     */
-    acceptDate: {
-        type: dbSchema.Types.Date,
-        default: null
     },
     /**
      * @name succeeded
