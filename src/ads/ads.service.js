@@ -73,23 +73,8 @@ export default {
      * @param {Object} author 
      */
     create(title, content, author) {
-        let errors = [];
-
-
-        if (!title) {
-            errors.push({ message: 'Title is missing.' });
-        }
-
-        if (!content) {
-            errors.push({ message: 'Content is missing.' });
-        }
-
-        if (errors.length) {
-            throw { errors };
-        }
-        
         const newAd = new Ad({ title, content, author });
-
+        
         return newAd.save();
     },
     /**

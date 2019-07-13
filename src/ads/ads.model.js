@@ -12,7 +12,7 @@ const adSchema = new dbSchema({
      */
     title: {
         type: String,
-        requried: true
+        required: true
     },
     /**
      * @name content
@@ -20,7 +20,7 @@ const adSchema = new dbSchema({
      */
     content: {
         type: String,
-        requried: true
+        required: true
     },
     /**
      * @name author
