@@ -9,7 +9,7 @@ export default {
         if (account.type === accountType.partner) {
             criteria = { interviewer: account.profile };
         } else if (account.type === accountType.student) {
-            criteria = { applicant: account.profile };
+            criteria = { applicant: account.profile, rejected: false };
         }
 
         if (criteria) {
@@ -34,7 +34,7 @@ export default {
         if (account.type === accountType.partner) {
             criteria = { interviewer: account.profile };
         } else if (account.type === accountType.student) {
-            criteria = { applicant: account.profile };
+            criteria = { applicant: account.profile, rejected: false };
         }
 
         if (criteria) {
@@ -76,9 +76,9 @@ export default {
         const edits = { accepted };
 
         if (!accepted) {
-            edits.isActive = false;
+            edits.rejected = true;
         }
-        
+
         interviewsService.edit(interviewId, edits)
             .then((interview) => {
                 res.json({ data: interview });

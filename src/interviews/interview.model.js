@@ -65,6 +65,10 @@ const interviewSchema = new dbSchema({
         type: Boolean,
         default: false
     },
+    rejected: {
+        type: Boolean,
+        default: false
+    },
     /**
      * @name succeeded
      * @type Boolean

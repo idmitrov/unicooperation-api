@@ -3,6 +3,7 @@ import Interview from './interview.model';
 const allowedInterviewProps = [
     'succeeded',
     'accepted',
+    'rejected',
     'scheduledDate',
     'applicant',
     'address',
