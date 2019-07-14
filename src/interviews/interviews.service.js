@@ -2,7 +2,6 @@ import Interview from './interview.model';
 
 const allowedInterviewProps = [
     'succeeded',
-    'acceptDate',
     'accepted',
     'scheduledDate',
     'applicant',
@@ -10,10 +9,16 @@ const allowedInterviewProps = [
     'interviewer',
     'ad',
     'title',
-    'description'
+    'description',
+    'isActive'
 ];
 
 export default {
+    getOneByCriteria(criteria, projection = []) {
+        return Interview
+            .findOne(criteria)
+            .select(projection);
+    },
     getByCriteria(criteria, projection = []) {
         return Interview
             .find(criteria)

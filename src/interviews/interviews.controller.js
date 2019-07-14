@@ -13,6 +13,8 @@ export default {
         }
 
         if (criteria) {
+            criteria.isActive = true;
+
             interviewsService.getByCriteria(criteria)
                 .then((foundInterviews) => {
                     const data = { list: foundInterviews };
@@ -25,13 +27,26 @@ export default {
         }
     },
     get(req, res, next) {
+        const { account } = req;
         const { interviewId } = req.params;
+        let criteria = null;
+        
+        if (account.type === accountType.partner) {
+            criteria = { interviewer: account.profile };
+        } else if (account.type === accountType.student) {
+            criteria = { applicant: account.profile };
+        }
 
-        interviewsService.getById(interviewId)
-            .then((foundInterview) => {
-                res.json({ data: foundInterview });
-            })
-            .catch((error) => next({ message: error.errmsg || error }));
+        if (criteria) {
+            criteria._id = interviewId;
+            criteria.isActive = true;
+
+            interviewsService.getOneByCriteria(criteria)
+                .then((foundInterview) => {
+                    res.json({ data: foundInterview });
+                })
+                .catch((error) => next({ message: error.errmsg || error }));
+        }
     },
     create(req, res, next) {
         const { account } = req;
@@ -56,11 +71,15 @@ export default {
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
-    accept(req, res, next) {
+    answer(req, res, next) {
         const { interviewId, accepted } = req.body;
-        const acceptDate = new Date();
+        const edits = { accepted };
 
-        this.interviewsService.edit(interviewId, { accepted, acceptDate })
+        if (!accepted) {
+            edits.isActive = false;
+        }
+        
+        interviewsService.edit(interviewId, edits)
             .then((interview) => {
                 res.json({ data: interview });
             })
