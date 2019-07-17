@@ -13,5 +13,6 @@ router
     .put('/request', [auth(accountType.partner)], interviewsController.edit)
     .post('/answer', auth(accountType.student), interviewsController.answer)
     .post('/complete', auth(accountType.partner), interviewsController.complete)
+    .delete('/:interviewId', [auth(accountType.partner), interviewsController.archive]);
 
 export default router;

@@ -56,7 +56,7 @@ export default {
             .then((arangedInterview) => {
                 res.json({
                     data: arangedInterview
-                })
+                });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
@@ -68,7 +68,20 @@ export default {
             .then((arangedInterview) => {
                 res.json({
                     data: arangedInterview
-                })
+                });
+            })
+            .catch((error) => next({ message: error.errmsg || error }));
+    },
+    archive(req, res, next) {
+        const { account } = req;
+        const { interviewId } = req.params;
+        const updates = { isActive: false };
+
+        interviewsService.edit(interviewId, account.profile, updates)
+            .then((arangedInterview) => {
+                res.json({
+                    data: arangedInterview
+                });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
