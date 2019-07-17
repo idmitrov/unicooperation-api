@@ -66,11 +66,15 @@ export default {
      * @param {String} interviewId 
      * @param {Object} edits 
      */
-    edit(interviewId, edits) {
+    edit(interviewId, interviewerId, edits) {
         return Interview.findById(interviewId)
             .then((interview) => {
                 if (!interview) {
                     throw new Error('Interview does not exist');
+                }
+                
+                if (!interview.interviewer.equals(interviewerId) && !interview.applicant.equals(interviewerId) ) {
+                    throw new Error('Unauthorized');
                 }
 
                 Object.keys(edits)

@@ -5,7 +5,7 @@ export default {
     getMineInterviews(req, res, next) {
         const { account } = req;
         let criteria = null;
-        
+
         if (account.type === accountType.partner) {
             criteria = { interviewer: account.profile };
         } else if (account.type === accountType.student) {
@@ -30,7 +30,7 @@ export default {
         const { account } = req;
         const { interviewId } = req.params;
         let criteria = null;
-        
+
         if (account.type === accountType.partner) {
             criteria = { interviewer: account.profile };
         } else if (account.type === accountType.student) {
@@ -61,9 +61,10 @@ export default {
             .catch((error) => next({ message: error.errmsg || error }));
     },
     edit(req, res, next) {
+        const { account } = req;
         const { interview } = req.body;
 
-        interviewsService.edit(interview._id, interview)
+        interviewsService.edit(interview._id, account.profile, interview)
             .then((arangedInterview) => {
                 res.json({
                     data: arangedInterview
@@ -72,6 +73,7 @@ export default {
             .catch((error) => next({ message: error.errmsg || error }));
     },
     answer(req, res, next) {
+        const { account } = req;
         const { interviewId, accepted } = req.body;
         const edits = { accepted };
 
@@ -79,16 +81,17 @@ export default {
             edits.rejected = true;
         }
 
-        interviewsService.edit(interviewId, edits)
+        interviewsService.edit(interviewId, account.profile, edits)
             .then((interview) => {
                 res.json({ data: interview });
             })
             .catch((error) => next({ message: error.errmsg || error }));
     },
     complete(req, res, next) {
+        const { account } = req;
         const { interviewId, succeeded } = req.body;
 
-        this.interviewsService.edit(interviewId, { succeeded })
+        interviewsService.edit(interviewId, account.profile, { succeeded })
             .then((interview) => {
                 res.json({ data: interview });
             })

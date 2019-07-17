@@ -12,6 +12,6 @@ router
     .post('/request', [auth(accountType.partner)], interviewsController.create)
     .put('/request', [auth(accountType.partner)], interviewsController.edit)
     .post('/answer', auth(accountType.student), interviewsController.answer)
-    .put('/complete', auth(accountType.partner), interviewsController.complete)
+    .post('/complete', auth(accountType.partner), interviewsController.complete)
 
 export default router;
