@@ -95,6 +95,6 @@ const interviewSchema = new dbSchema({
     }
 }, interviewSchemaOptions);
 
-interviewSchema.index({ applicant: 1, ad: 1 }, { unique: true })
+interviewSchema.index({ applicant: 1, ad: 1 }, { unique: true });
 
 export default dbModel('Interview', interviewSchema);
