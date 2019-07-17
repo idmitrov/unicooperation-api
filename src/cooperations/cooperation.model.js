@@ -24,7 +24,13 @@ const cooperationSchema = new dbSchema({
         type: Boolean,
         default: true
     },
-    interviews: [{ type: dbSchema.Types.ObjectId, ref: 'Interview' }]
+    interview: {
+        type: dbSchema.Types.ObjectId,
+        ref: 'Interview',
+        default: null
+    }
 }, cooperationSchemaOptions);
+
+cooperationSchema.index({ student: 1, partner: 1, university: 1 }, { unique: true });
 
 export default dbModel('Cooperation', cooperationSchema);
