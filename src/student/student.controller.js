@@ -67,7 +67,7 @@ export default {
             .then((createdStudent) => {
                 req.account.setProfile(createdStudent.id)
                     .then((savedAccount) => {
-                        const data = { account: savedAccount };
+                        const data = { account: savedAccount.getPublicFields() };
 
                         return res.json({ data });
                     });
