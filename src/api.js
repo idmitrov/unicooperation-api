@@ -46,13 +46,13 @@ const configureAuth = (options = {}) => {
         Account.findOne({ email })
             .then((foundAccount) => {
                 if (!foundAccount) {
-                    return done({ message: 'Invalid credentials' });
+                    return done({ message: 'Invalid credentials', id: 'error.credentials' });
                 }
 
                 foundAccount.comparePasswords(password, foundAccount.password)
                     .then((passwordMatch) => {
                         if (!passwordMatch) {
-                            return done({ message: 'Invalid credentials' });
+                            return done({ message: 'Invalid credentials',  id: 'error.credentials'  });
                         }
                         
                         const userData = Object.assign({}, foundAccount.getPublicFields(), {
@@ -98,7 +98,7 @@ const handleErrors = (api) => {
     api.use((ex, req, res, next) => {
         if (ex) {            
             let errors = [];
-            
+
             if (ex.errors) {
                 errors = Object.keys(ex.errors)
                     .map((errKey) => {
@@ -109,9 +109,9 @@ const handleErrors = (api) => {
                         return ex.errors[errKey].message;
                     });
             } else if (ex.message) {
-                errors.push({ message: ex.message.toString() });
+                errors.push({ message: ex.message });
             } else {
-                errors.push({ message: ex.toString() });
+                errors.push({ message: ex });
             }
 
             return res
