@@ -108,12 +108,8 @@ const handleErrors = (api) => {
 
                         return ex.errors[errKey].message;
                     });
-            } else if (ex.message) {
-                errors.push({ message: ex.message });
-            } else if (ex.errmsg) {
-                errors.push({ message: ex.errmsg });
             } else {
-                errors.push({ message: ex });
+                errors.push(ex);
             }
 
             return res

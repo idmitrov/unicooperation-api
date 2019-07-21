@@ -28,7 +28,7 @@ export default {
         return new Promise((resolve, reject) => {
             return Passport.authenticate('local', (err, accountData) => {
                 if (err) {
-                    reject(err);
+                    return reject(err);
                 }
 
                 return resolve(accountData);
