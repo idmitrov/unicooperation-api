@@ -19,6 +19,12 @@ export default {
      * @param {Object} res 
      */
     login(req, res) {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            throw { message: 'Invalid credentials', id: 'error.credentials' };
+        }
+        
         return new Promise((resolve, reject) => {
             return Passport.authenticate('local', (err, accountData) => {
                 if (err) {

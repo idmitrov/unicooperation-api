@@ -110,6 +110,8 @@ const handleErrors = (api) => {
                     });
             } else if (ex.message) {
                 errors.push({ message: ex.message });
+            } else if (ex.errmsg) {
+                errors.push({ message: ex.errmsg });
             } else {
                 errors.push({ message: ex });
             }
