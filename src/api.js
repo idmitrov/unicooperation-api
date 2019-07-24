@@ -29,6 +29,7 @@ import partnerRoutes from './partner/partner.routes';
 import publicationRoutes from './publication/publication.routes';
 import interviewsRoutes from './interviews/interviews.routes';
 import cooperationsRoutes from './cooperations/cooperations.routes';
+import skillsRoutes from './skills/skills.routes';
 
 import publicationEvents from './publication/publication.events';
 
@@ -84,6 +85,7 @@ const configureRoutes = (api) => {
         .use('/partner', partnerRoutes)
         .use('/cooperation', cooperationsRoutes)
         .use('/interview', interviewsRoutes)
+        .use('/skills', skillsRoutes)
         .use('/admin', adminRoutes)
         .use('*', (req, res, next) => next('Unknown endpoint'));
 }
