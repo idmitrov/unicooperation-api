@@ -26,6 +26,4 @@ const skillSchema = new dbSchema({
     }
 }, skillSchemaOptions);
 
-skillSchema.index({ university: 1, facultyId: 1 }, { unique: true })
-
 export default dbModel('Skill', skillSchema);
