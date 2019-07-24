@@ -81,6 +81,7 @@ export default {
      * @param {String} update 
      */
     findByIdAndUpdate(id, update) {
-        return Student.findOneAndUpdate({'_id': id}, update, { new: true });
+        return Student
+            .findOneAndUpdate({'_id': id}, update, { new: true });
     }
 }

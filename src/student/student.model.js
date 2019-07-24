@@ -111,6 +111,13 @@ const studentSchema = new dbSchema({
         default: null
     },
     /**
+     * @name skills
+     * @type Array
+     */
+    skills: [{
+        type: String
+    }],
+    /**
      * @name title
      * @type String
      */
@@ -137,6 +144,6 @@ const studentSchema = new dbSchema({
     }
 }, studentSchemaOptions);
 
-studentSchema.index({ university: 1, facultyId: 1 }, { unique: true })
+studentSchema.index({ university: 1, facultyId: 1 }, { unique: true });
 
 export default dbModel('Student', studentSchema);

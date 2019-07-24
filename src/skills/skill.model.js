@@ -12,7 +12,9 @@ const skillSchema = new dbSchema({
     name: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        trim: true,
+        lowercase: true
     },
     /**
      * @name level

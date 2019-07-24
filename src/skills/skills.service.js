@@ -22,6 +22,8 @@ export default {
      * @param {String} name 
      */
     filter(name) {
-        return Skill.find({ name });
+        const regex = new RegExp(`^${name}`, 'i');
+
+        return Skill.find({ name: { $regex: regex } });
     }
 }

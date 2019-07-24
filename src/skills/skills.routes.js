@@ -7,6 +7,7 @@ import { auth } from '../account/account.middleware';
 const router = new Router();
 
 router
+    .post('', [auth(accountType.student)], skillsController.create)
     .get('/filter', [auth(accountType.student)], skillsController.filter)
 
 export default router;
