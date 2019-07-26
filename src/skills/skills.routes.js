@@ -8,6 +8,6 @@ const router = new Router();
 
 router
     .post('', [auth(accountType.student)], skillsController.create)
-    .get('/filter', [auth(accountType.student)], skillsController.filter)
+    .get('/filter', [auth([accountType.student, accountType.partner])], skillsController.filter)
 
 export default router;
