@@ -12,12 +12,20 @@ export default {
         const { account } = req;
         const { page, limit } = req.query;
         
+        let filters = {};
+        Object.keys(req.query)
+            .forEach((key) => {
+                if (req.query[key] !== 'null') {
+                    filters[key] = req.query[key];
+                }
+            })
+
         return account.getProfile()
             .then((profile) => {
-                const query = Object.assign({}, req.query, {
+                const query = Object.assign({}, filters, {
                     university: profile.universities
                 });
-        
+
                 return query;
             })
             .then((query) => studentService.match(query, page, limit))
