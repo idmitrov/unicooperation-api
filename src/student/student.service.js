@@ -11,7 +11,7 @@ export default {
      */
     match(criteria, page = 1, limit = 10, projection = []) {
         const query = { available: true };
-        const optionalCriterias = ['experience', 'verified', 'university'];
+        const optionalCriterias = ['experience', 'verified', 'university', 'skills'];
         
         page = Number(page) || 0;
         limit = Number(limit) || 10;

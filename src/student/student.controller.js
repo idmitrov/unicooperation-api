@@ -15,11 +15,15 @@ export default {
         let filters = {};
         Object.keys(req.query)
             .forEach((key) => {
-                if (req.query[key] !== 'null') {
+                if (req.query[key] !== '' && req.query[key] !== 'null') {
                     filters[key] = req.query[key];
                 }
-            })
+            });
 
+        if (req.query.skills) {
+            filters.skills = req.query.skills.split(',');
+        }
+        
         return account.getProfile()
             .then((profile) => {
                 const query = Object.assign({}, filters, {
