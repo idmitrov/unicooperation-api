@@ -1,6 +1,7 @@
 import Skill from './skill.model';
 
 const DEFAULT_SKILL_LEVEL = 1;
+const DEFAULT_PAGING_LIMIT = 10;
 
 export default {
     /**
@@ -21,9 +22,17 @@ export default {
      * @name filter
      * @param {String} name 
      */
-    filter(name) {
-        const regex = new RegExp(`^${name}`, 'i');
+    filter(name, limit) {
+        if (!name) {
+            return Promise.resolve([]);
+        }
 
-        return Skill.find({ name: { $regex: regex } });
+        const regex = new RegExp(`^${name}`, 'i');
+        
+        limit = limit || DEFAULT_PAGING_LIMIT;
+
+        return Skill
+            .find({ name: { $regex: regex } })
+            .limit(limit);
     }
 }
